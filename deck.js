@@ -1,5 +1,5 @@
 // import Card from './card.js';
-import Shuffle from './utils.js';
+// import { shuffle } from './utils';
 
 class Deck {
 
@@ -15,11 +15,11 @@ class Deck {
         deck.push( new Card(suit, value) );
       });
     });
-    return deck;
+    return this.shuffle(this.shuffle(deck));
   }
 
   dealHand() {
-
+    return new Hand (this.take(5));
   }
 
   count() {
@@ -30,45 +30,21 @@ class Deck {
     if (n > this.count()) {
       return null;
     }
-    const dealtCard = this.deck.shift();
+    const dealtCard = this.deck.splice(0,n);
     return dealtCard;
+  }
+
+  returnCards(cards) {
+    this.deck.push(...cards);
+  }
+
+  shuffle(cards) {
+    for (let i = cards.length - 1; i > 0; i--) {
+         const j = Math.floor(Math.random() * (i + 1));
+         [cards[i], cards[j]] = [cards[j], cards[i]];
+     }
+     return cards;
   }
 
 
 }
-
-//
-// class Deck
-//   def self.all_cards
-//     Card.suits.product(Card.values).map do |suit, value|
-//       Card.new(suit, value)
-//     end
-//   end
-//
-//   def initialize(cards = Deck.all_cards)
-//     @cards = cards
-//   end
-//
-//   def deal_hand
-//     Hand.new(take(5))
-//   end
-//
-//   def count
-//     @cards.count
-//   end
-//
-//   def take(n)
-//     raise "not enough cards" if n > count
-//     @cards.shift(n)
-//   end
-//
-//   def return(cards)
-//     @cards.push(*cards)
-//   end
-//
-//   def shuffle
-//     @cards.shuffle!
-//   end
-// end
-
-// export default Deck;
