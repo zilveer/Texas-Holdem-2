@@ -8,10 +8,10 @@ class Game {
 
     let pokerHand = new PokerHand();
 
-    pokerHand.pile = new Hand([ new Card('spades', 'ace'), new Card('spades', 'ace'), new Card('spades', 'ace'),new Card('spades', 'king'), new Card('spades', 'ten')   ]).hand;
+    pokerHand.pile = new Hand([ new Card('clubs', 'ace'), new Card('clubs', 'ace'), new Card('clubs', 'ace'),new Card('hearts', 'king'), new Card('hearts', 'ten')   ]).hand;
 
 
-    pokerHand.hand = new Hand([ new Card('spades', 'ace'), new Card('spades', 'two'), new Card('spades', 'three'),new Card('spades', 'four'), new Card('spades', 'five')   ]).hand;
+    pokerHand.hand = new Hand([ new Card('diamonds', 'ace'), new Card('diamonds', 'two'), new Card('spades', 'three'),new Card('spades', 'four'), new Card('spades', 'five')   ]).hand;
     pokerHand.isFlush();
 
 debugger

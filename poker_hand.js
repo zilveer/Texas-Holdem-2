@@ -92,13 +92,12 @@ class PokerHand extends WinningHands {
     };
 
     for (var i = 0; i < this.handPile().length; i++) {
-      const suit = suits[this.handPile()[i].suit];
+      const suit = this.handPile()[i].suit;
       suits[suit] += 1;
       if ( suits[suit] > 4 ) {
         return true;
       }
     }
-
     return false;
 
   }
@@ -110,6 +109,18 @@ class PokerHand extends WinningHands {
       }
     }
     return false;
+  }
+
+  isHouse() {
+    return isThreeKind() && isPair();
+  }
+
+  isStraightFlush() {
+    return isStraight() && isFlush();
+  }
+
+  isRoyalFlush() {
+    return isRoyal() && isStraightFlush();
   }
 
   isStraight() {
