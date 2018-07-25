@@ -1,9 +1,8 @@
-class Hand extends PokerHands {
+class Hand {
 
-  constructor(cards, pile) {
-    super(cards);
+  constructor(cards) {
     this.hand = cards;
-    this.pile = pile;
+    sort(this.hand);
   }
 
   takeCards(cards) {
@@ -18,43 +17,8 @@ class Hand extends PokerHands {
     this.hand = [];
   }
 
-  // beats(otherHand) {
-  //
-  // }
-
-  card_value_count(value) {
-    const handPile = this.hand.concat(this.pile);
-    return handPile.reduce( (sum, card) => (
-      (card.value === value ) ? sum + 1 : sum ), 0);
-  }
-
 }
 
-// def self.winner(hands)
-//   hands.sort.last
-// end
-//
-// def trade_cards(old_cards, new_cards)
-//   raise 'must have five cards' unless old_cards.count == new_cards.count
-//   raise 'cannot discard unowned card' unless has_cards?(old_cards)
-//   take_cards(new_cards) && discard_cards(old_cards) && sort!
-//   old_cards
-// end
-//
-// def to_s
-//   cards.join(' ')
-// end
-//
-// private
-// def sort!
-//   @cards.sort!
-// end
-//
-// def discard_cards(old_cards)
-//   old_cards.each { |card| cards.delete(card) }
-// end
-//
-// def has_cards?(old_cards)
-//   old_cards.all? { |card| cards.include?(card) }
-// end
-// end
+
+// new Hand([ new Card('spades', 'ace'), new Card('spades', 'jack'), new Card('spades', 'queen'),new Card('spades', 'king'), new Card('spades', 'ten')   ]).hand;
+// new Hand([ new Card('spades', 'ace'), new Card('spades', 'two'), new Card('spades', 'three'),new Card('spades', 'four'), new Card('spades', 'five')   ]).hand;

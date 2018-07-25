@@ -20,11 +20,11 @@ class Deck {
   }
 
   dealPile() {
-    return new Pile (this.take(3));
+    return new Pile (this.take(2));
   }
 
   dealHand() {
-    return new Hand (this.take(2));
+    return new Hand (this.take(3));
   }
 
   take(n) {
@@ -38,14 +38,6 @@ class Deck {
   returnCards(cards) {
     this.deck.push(...cards);
   }
-
-  // shuffle(cards) {
-  //   for (let i = cards.length - 1; i > 0; i--) {
-  //        const j = Math.floor(Math.random() * (i + 1));
-  //        [cards[i], cards[j]] = [cards[j], cards[i]];
-  //    }
-  //    return cards;
-  // }
 
   count() {
     return this.deck.length;

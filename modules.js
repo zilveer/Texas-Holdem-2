@@ -24,3 +24,18 @@ function unique ( array ) {
   });
   return unique_arr;
 }
+
+function sort ( cards ) {
+  const sorted = [];
+  let unsorted = true;
+  while (unsorted) {
+    unsorted = false;
+    for (var i = 0; i < cards.length-1; i++) {
+      if ( cards[i].isGreaterThan(cards[i+1]) ){
+        [cards[i], cards[i+1]] = [cards[i+1], cards[i]];
+        unsorted = true;
+      }
+    }
+  }
+  return cards;
+}
