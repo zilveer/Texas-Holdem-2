@@ -7,9 +7,8 @@ class PokerHand extends WinningHands {
   }
 
   card_value_count(value) {
-    const handPile = this.hand.concat(this.pile);
     let sum= 0;
-    handPile.forEach ( card => {
+    this.handPile().forEach ( card => {
       if ( card.value === value ) {
         sum += 1;
       }
@@ -41,19 +40,17 @@ class PokerHand extends WinningHands {
   }
 
   highCard() {
-    const sorted = sort(this.hand.concat(this.pile));
-    return sorted[sorted.length-1];
+    return this.handPile()[sorted.length-1];
   }
 
   cardsWithout(value) {
-    const cards = this.hand.concat(this.pile);
-    return cards.filter( card => ( card.value != value ));
+    return this.handPile().filter( card => ( card.value != value ));
   }
 
   any(valueOrSuit) {
-    const cards = this.hand.concat(this.pile);
-    for (var i = 0; i < cards.length; i++) {
-      if ( cards[i].value === valueOrSuit || cards[i].suit === valueOrSuit ) {
+    for (var i = 0; i < this.handPile().length; i++) {
+      if ( this.handPile()[i].value === valueOrSuit ||
+        this.handPile()[i].suit === valueOrSuit ) {
         return true;
       }
     }
@@ -62,34 +59,53 @@ class PokerHand extends WinningHands {
 
   isRoyal() {
     const royals = this.hand[0].royals();
-    const handPile = this.hand.concat(this.pile).map(
+    const hand = this.handPile().map(
       card => ( card.value ));
     let count = 0;
-    return royals.every( royalValue => (handPile.includes(royalValue)) );
+    return royals.every( royalValue => (hand.includes(royalValue)) );
   }
 
   isPair() {
-    return this.pairs.count === 1;
+    return this.pairs().length === 1;
   }
 
   isTwoPair() {
-    return this.pairs.count === 2;
+
+    return this.pairs().length === 2;
   }
 
   isThreeKind() {
-    const handPile = this.hand.concat(this.pile);
-    for (var i = 0; i < handPile.length; i++) {
-      if ( this.card_value_count(handPile[i]) === 3 ) {
+    for (var i = 0; i < this.handPile().length; i++) {
+      if ( this.card_value_count(this.handPile()[i].value) === 3 ) {
         return true;
       }
     }
     return false;
   }
 
+  isFlush() {
+    const suits = {
+      clubs: 0,
+      spades: 0,
+      hearts: 0,
+      diamonds: 0
+    };
+
+    for (var i = 0; i < this.handPile().length; i++) {
+      const suit = suits[this.handPile()[i].suit];
+      suits[suit] += 1;
+      if ( suits[suit] > 4 ) {
+        return true;
+      }
+    }
+
+    return false;
+
+  }
+
   isFourKind() {
-    const handPile = this.hand.concat(this.pile);
-    for (var i = 0; i < handPile.length; i++) {
-      if ( this.card_value_count(handPile[i]) === 4 ) {
+    for (var i = 0; i < this.handPile().length; i++) {
+      if ( this.card_value_count(this.handPile()[i].value) === 4 ) {
         return true;
       }
     }
@@ -100,27 +116,22 @@ class PokerHand extends WinningHands {
 
     let straight;
     const values = this.hand[0].values();
-    const handPile = unique( sort(this.hand.concat(this.pile)).map(
+    const hand = unique( sort(this.handPile()).map(
       card => ( card.value )));
 
     if ( this.any('ace') && this.any('two') ) {
       straight = values.slice(0, 4).concat(['ace']);
-      // if ( straight.every( card => handPile.indexOf(card) > -1  ) ) {
-      //   return true;
-      // }
     } else {
-        for (var i = 0; i < handPile.length-5; i++) {
-          const sample = handPile.slice(i,5);
-          straight = values.slice(i, 5);
-          debugger
+        for (var i = 0; i < hand.length-4; i++) {
+          const sample = hand.slice(i, i+5);
+          const start = values.indexOf(sample[0]);
+          straight = values.slice(start, start+5);
           if ( straight.every( card => sample.indexOf(card) > -1  ) ) {
             return true;
           }
         }
     }
-
-    return straight.every( card => handPile.indexOf(card) > -1  )
-
+    return straight.every( card => hand.indexOf(card) > -1  );
   }
 
 

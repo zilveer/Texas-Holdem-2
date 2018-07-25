@@ -1,11 +1,14 @@
 class WinningHands {
 
+  handPile() {
+    return sort(this.hand.concat(this.pile));
+  }
+
   pairs() {
     let pairs = [];
-    const handPile = this.hand.concat(this.pile);
-    unique(handPile.map( el => ( el.value ))).forEach( value => {
+    unique(this.handPile().map( el => ( el.value ))).forEach( value => {
       if (this.card_value_count(value) === 2) {
-        pairs.push( handPile.filter( card => (card.value === value) ) );
+        pairs.push( this.handPile().filter( card => (card.value === value) ) );
       }
     });
     return pairs;
