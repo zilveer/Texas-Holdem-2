@@ -1,4 +1,4 @@
-const comparator = (val1, val2) => {
+function comparator(val1, val2) {
   if (val1 === val2) {
     return 0;
   } else if (val1 > val2) {
@@ -6,12 +6,21 @@ const comparator = (val1, val2) => {
   } else {
     return 1;
   }
-};
+}
 
-const shuffle = arr => {
-  for (let i = arr.length - 1; i > 0; i--) {
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
        const j = Math.floor(Math.random() * (i + 1));
-       [arr[i], arr[j]] = [arr[j], arr[i]];
+       [array[i], array[j]] = [array[j], array[i]];
    }
-   return arr;
-};
+   return array;
+}
+
+function unique ( array ) {
+  const unique_arr = [];
+  array.forEach( el => {
+    if (!unique_arr.includes(el))
+      unique_arr.push(el);
+  });
+  return unique_arr;
+}

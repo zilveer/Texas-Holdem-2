@@ -1,11 +1,31 @@
-class Hand {
+class Hand extends PokerHands {
 
-  constructor(cards) {
+  constructor(cards, pile) {
+    super(cards);
     this.hand = cards;
+    this.pile = pile;
   }
 
-  receiveCards(cards) {
+  takeCards(cards) {
     this.hand.push(...cards);
+  }
+
+  updatePile(pile) {
+    this.pile.push(...pile);
+  }
+
+  resetHand() {
+    this.hand = [];
+  }
+
+  // beats(otherHand) {
+  //
+  // }
+
+  card_value_count(value) {
+    const handPile = this.hand.concat(this.pile);
+    return handPile.reduce( (sum, card) => (
+      (card.value === value ) ? sum + 1 : sum ), 0);
   }
 
 }
@@ -28,10 +48,6 @@ class Hand {
 // private
 // def sort!
 //   @cards.sort!
-// end
-//
-// def take_cards(cards)
-//   @cards.push(*cards)
 // end
 //
 // def discard_cards(old_cards)

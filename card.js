@@ -1,9 +1,9 @@
 class Card {
 
-  constructor(suit, value) {
+  constructor(suit, value, image) {
     this.suit = suit;
     this.value = value;
-
+    this.image = image;
   }
 
   SUITS_STRINGS() {
@@ -39,6 +39,10 @@ class Card {
 
   suits() {
     return Object.keys(this.SUITS_STRINGS());
+  }
+
+  royals() {
+    return Object.keys(this.VALUES_STRINGS()).slice(8);
   }
 
   isEqual(otherCard) {

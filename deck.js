@@ -1,5 +1,6 @@
 // import Card from './card.js';
 // import { shuffle } from './utils';
+// const shuffle = require('./modules.js');
 
 class Deck {
 
@@ -15,15 +16,15 @@ class Deck {
         deck.push( new Card(suit, value) );
       });
     });
-    return this.shuffle(this.shuffle(deck));
+    return shuffle(shuffle(deck));
+  }
+
+  dealPile() {
+    return new Pile (this.take(3));
   }
 
   dealHand() {
-    return new Hand (this.take(5));
-  }
-
-  count() {
-    return this.deck.length;
+    return new Hand (this.take(2));
   }
 
   take(n) {
@@ -38,12 +39,16 @@ class Deck {
     this.deck.push(...cards);
   }
 
-  shuffle(cards) {
-    for (let i = cards.length - 1; i > 0; i--) {
-         const j = Math.floor(Math.random() * (i + 1));
-         [cards[i], cards[j]] = [cards[j], cards[i]];
-     }
-     return cards;
+  // shuffle(cards) {
+  //   for (let i = cards.length - 1; i > 0; i--) {
+  //        const j = Math.floor(Math.random() * (i + 1));
+  //        [cards[i], cards[j]] = [cards[j], cards[i]];
+  //    }
+  //    return cards;
+  // }
+
+  count() {
+    return this.deck.length;
   }
 
 
