@@ -3,6 +3,18 @@ class Player {
   constructor(bankroll) {
     this.bankroll = bankroll;
     this.currentBet = 0;
+    this.render();
+  }
+
+  render() {
+    const hands = document.getElementById('hands');
+    var li = document.createElement('li');
+    hands.appendChild()
+    // this.pile.forEach ( card => {
+    //   var pile = document.getElementById('pile');
+    //   pile.appendChild(card.image);
+    // });
+
   }
 
   dealIn(hand) {

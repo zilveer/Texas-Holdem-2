@@ -3,6 +3,14 @@ class Hand {
   constructor(cards) {
     this.hand = cards;
     sort(this.hand);
+    this.render();
+  }
+
+  render() {
+    this.hand.forEach ( card => {
+      var hand = document.getElementById('hands');
+      hand.appendChild(card.image);
+    });
   }
 
   takeCards(cards) {

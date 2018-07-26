@@ -6,6 +6,14 @@ class Deck {
 
   constructor() {
     this.deck = this.populateDeck();
+    this.render();
+  }
+
+  render() {
+    var img = document.createElement('img');
+    img.src = './images/cards/b.gif';
+    var deck = document.getElementById('deck');
+    deck.appendChild(img);
   }
 
   populateDeck() {
@@ -13,7 +21,9 @@ class Deck {
     const deck = [];
     sample.values().forEach( value => {
       sample.suits().forEach( suit => {
-        deck.push( new Card(suit, value, `./images/cards/`) );
+        var img = document.createElement('img');
+        img.src = `./images/cards/${value}_${suit}.gif`;
+        deck.push( new Card(suit, value, img) );
       });
     });
     return shuffle(shuffle(deck));
