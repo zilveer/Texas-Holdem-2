@@ -13,7 +13,7 @@ class Deck {
     const deck = [];
     sample.values().forEach( value => {
       sample.suits().forEach( suit => {
-        deck.push( new Card(suit, value) );
+        deck.push( new Card(suit, value, `./images/cards/`) );
       });
     });
     return shuffle(shuffle(deck));

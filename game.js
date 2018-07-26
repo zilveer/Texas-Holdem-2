@@ -39,10 +39,58 @@ class Game {
       player.resetCurrentBet()
     ));
 
-   const high_bet = 0;
-   const no_raises = false;
-   const most_recent_better = null;
-///////////////////
+   let high_bet = 0;
+   let most_recent_better = null;
+
+   let noRaises = true;
+   while (noRaises) {
+    noRaises = false;
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      if (player.isFolded) { continue; }
+      if (most_recent_better === player || this.roundOver() ) {
+        break;
+      }
+      //display status of bet
+    }
+
+
+
+
+
+  }
+//until no_raises
+//       no_raises = true
+//       players.each_with_index do |player, i|
+//         next if player.folded?
+//         break if most_recent_better == player || round_over?
+//
+//         display_status(i, high_bet)
+//
+//         begin
+//           response = player.respond_bet
+//           case response
+//           when :call
+//             add_to_pot(player.take_bet(high_bet))
+//           when :bet
+//             raise "not enough money" unless player.bankroll >= high_bet
+//             no_raises = false
+//             most_recent_better = player
+//             bet = player.get_bet
+//             raise "bet must be at least $#{high_bet}" unless bet >= high_bet
+//             rs = player.take_bet(bet)
+//             high_bet = bet
+//             add_to_pot(rs)
+//           when :fold
+//             player.fold
+//           end
+//         rescue => error
+//           puts "#{error.message}"
+//           retry
+//         end
+//
+//       end
+//     end
 
   }
 
@@ -134,47 +182,6 @@ debugger
 
 }
 
-//
-
-//   def take_bets
-//     players.each(&:reset_current_bet)
-//     high_bet = 0
-//     no_raises = false
-//     most_recent_better = nil
-//
-//     until no_raises
-//       no_raises = true
-//       players.each_with_index do |player, i|
-//         next if player.folded?
-//         break if most_recent_better == player || round_over?
-//
-//         display_status(i, high_bet)
-//
-//         begin
-//           response = player.respond_bet
-//           case response
-//           when :call
-//             add_to_pot(player.take_bet(high_bet))
-//           when :bet
-//             raise "not enough money" unless player.bankroll >= high_bet
-//             no_raises = false
-//             most_recent_better = player
-//             bet = player.get_bet
-//             raise "bet must be at least $#{high_bet}" unless bet >= high_bet
-//             rs = player.take_bet(bet)
-//             high_bet = bet
-//             add_to_pot(rs)
-//           when :fold
-//             player.fold
-//           end
-//         rescue => error
-//           puts "#{error.message}"
-//           retry
-//         end
-//
-//       end
-//     end
-//   end
 //
 //   def display_status(index, high_bet)
 //     puts

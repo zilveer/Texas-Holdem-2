@@ -18,16 +18,16 @@ class PokerHand extends WinningHands {
 
   handTypes() {
     return [
-      'royalFlush',
-      'straightFlush',
-      'fourKind',
-      'house',
-      'flush',
-      'straight',
-      'threeKind',
-      'twoPair',
-      'onePair',
-      'highCard'
+      'RoyalFlush',
+      'StraightFlush',
+      'FourKind',
+      'House',
+      'Flush',
+      'Straight',
+      'ThreeKind',
+      'TwoPair',
+      'OnePair',
+      'HighCard'
     ];
   }
 
@@ -36,28 +36,11 @@ class PokerHand extends WinningHands {
   }
 
   rank() {
-    if (this.isRoyalFlush()) {
-      return 'royalFlush';
-    } else if (this.isStraightFlush()) {
-      return 'straightFlush';
-    } else if (this.isFourKind()) {
-      return 'fourKind';
-    } else if (this.isHouse()) {
-      return 'house';
-    } else if (this.isFlush()) {
-      return 'flush';
-    } else if (this.isStraight()) {
-      return 'straight';
-    } else if (this.isThreeKind()) {
-      return 'threeKind';
-    } else if (this.isTwoPair()) {
-      return 'twoPair';
-    } else if (this.isPair()) {
-      return 'onePair';
-    } else if (this.isTwoPair()) {
-      return 'twoPair';
-    } else {
-      return 'highCard';
+    for (var i = 0; i < this.handTypes().length; i++) {
+     const handType = this.handTypes()[i];
+     if (this[`is${handType}`]()) {
+       return handType;
+     }
     }
   }
 
@@ -196,6 +179,28 @@ class PokerHand extends WinningHands {
     }
   }
 
-
-
 }
+
+// if (this.isRoyalFlush()) {
+//   return 'royalFlush';
+// } else if (this.isStraightFlush()) {
+//   return 'straightFlush';
+// } else if (this.isFourKind()) {
+//   return 'fourKind';
+// } else if (this.isHouse()) {
+//   return 'house';
+// } else if (this.isFlush()) {
+//   return 'flush';
+// } else if (this.isStraight()) {
+//   return 'straight';
+// } else if (this.isThreeKind()) {
+//   return 'threeKind';
+// } else if (this.isTwoPair()) {
+//   return 'twoPair';
+// } else if (this.isPair()) {
+//   return 'onePair';
+// } else if (this.isTwoPair()) {
+//   return 'twoPair';
+// } else {
+//   return 'highCard';
+// }
