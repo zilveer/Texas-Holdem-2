@@ -18,16 +18,16 @@ class PokerHand extends WinningHands {
 
   handTypes() {
     return [
-      'highCard',
-      'onePair',
-      'twoPair',
-      'threeKind',
-      'straight',
-      'flush',
-      'house',
-      'fourKind',
+      'royalFlush',
       'straightFlush',
-      'royalFlush'
+      'fourKind',
+      'house',
+      'flush',
+      'straight',
+      'threeKind',
+      'twoPair',
+      'onePair',
+      'highCard'
     ];
   }
 
@@ -36,7 +36,9 @@ class PokerHand extends WinningHands {
   }
 
   rank() {
-
+    for (var i = 0; i < this.handTypes().length; i++) {
+      // this.handTypes()[i]
+    }
   }
 
   isGreaterThan(otherPokerHand) {
@@ -80,7 +82,6 @@ class PokerHand extends WinningHands {
   }
 
   isTwoPair() {
-
     return this.pairs().length === 2;
   }
 
@@ -149,8 +150,7 @@ class PokerHand extends WinningHands {
     } else {
         for (var i = 0; i < hand.length-4; i++) {
           const sample = hand.slice(i, i+5);
-          const start = values.indexOf(sample[0]);
-
+          const start = values.indexOf(sample[sample.length-1]);
           straight = values.slice(start, start+5);
           if ( straight.every( card => sample.indexOf(card) > -1  ) ) {
             return this.handPile().filter( card => (straight.includes(card.value)));
