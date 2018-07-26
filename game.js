@@ -24,6 +24,18 @@ class Game {
     }
   }
 
+  setup() { //testing purposes
+    // let deck = new Deck();
+    let pile = this.deck.dealPile();
+    let hand = this.deck.dealHand();
+    let hand2 = this.deck.dealHand();
+
+    let pokerHand = new PokerHand(hand, pile);
+    let pokerHand2 = new PokerHand(hand2, pile);
+    debugger
+  }
+
+
   playRound() {
     this.deck = shuffle(this.deck);
     this.resetPlayers();
@@ -137,48 +149,6 @@ class Game {
   addToPot(amount) {
     this.pot += amount;
   }
-
-  setup() { //testing purposes
-    // let deck = new Deck();
-    let pile = this.deck.dealPile();
-    let hand = this.deck.dealHand();
-    let hand2 = this.deck.dealHand();
-
-    let pokerHand = new PokerHand(hand, pile);
-    let pokerHand2 = new PokerHand(hand2, pile);
-
-    // const pile = new Hand([
-    //   new Card('diamonds', 'nine'),
-    //   new Card('hearts', 'seven'),
-    //   new Card('spades', 'four'),
-    //   new Card('hearts', 'jack'),
-    //   new Card('clubs', 'seven')
-    // ]).hand;
-    //
-    // pokerHand.pile = pile;
-    // pokerHand2.pile = pile;
-    // pokerHand3.pile = pile;
-
-    // pokerHand.hand = new Hand([
-    //   new Card('hearts', 'ten'),
-    //   new Card('hearts', 'nine')
-    // ]).hand;
-    //
-    // pokerHand2.hand = new Hand([
-    //   new Card('diamonds', 'nine'),
-    //   new Card('spades', 'seven')
-    // ]).hand;
-    //
-    // pokerHand3.hand = new Hand([
-    //   new Card('diamonds', 'eight'),
-    //   new Card('spades', 'ten')
-    // ]).hand;
-    //
-    // pokerHand2.rank();
-
-// debugger
-  }
-
 
 }
 

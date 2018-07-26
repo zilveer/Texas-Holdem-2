@@ -3,12 +3,18 @@ class Hand {
   constructor(cards) {
     this.hand = cards;
     sort(this.hand);
+    this.id = Math.floor(Math.random()*10000);
     this.render();
   }
 
   render() {
+    const hands = document.getElementById('hands');
+    var ul = document.createElement('ul');
+    ul.id = this.id;
+    hands.appendChild(ul);
+
     this.hand.forEach ( card => {
-      var hand = document.getElementById('hands');
+      var hand = document.getElementById(`${this.id}`);
       hand.appendChild(card.image);
     });
   }
@@ -26,7 +32,3 @@ class Hand {
   }
 
 }
-
-
-// new Hand([ new Card('spades', 'ace'), new Card('spades', 'jack'), new Card('spades', 'queen'),new Card('spades', 'king'), new Card('spades', 'ten')   ]).hand;
-// new Hand([ new Card('spades', 'ace'), new Card('spades', 'two'), new Card('spades', 'three'),new Card('spades', 'four'), new Card('spades', 'five')   ]).hand;
