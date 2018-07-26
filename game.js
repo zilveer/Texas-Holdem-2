@@ -46,13 +46,30 @@ class Game {
 
     this.take_bets();
 
-//     this.end_round
+    this.end_round();
   }
 
   endRound() {
-    this.showHands();
-  }
+    dealerMessage = document.getElementById('dealer-message-box');
+    var li = document.createElement('li');
+    const winningHand = this.winner().hand;
 
+    this.showHands();
+
+    li.innerHTML = `WINNER - ${winningHand} wins $${this.pot} with a ${winningHand.rank()}`;
+
+    dealerMessage.appendChild(li);
+    this.winner().receiveWinnings(this.pot);
+    this.pot = 0;
+    this.returnCards();
+  }
+  // show_hands
+  // puts
+  // puts "WINNER"
+  // puts "#{winner.hand} wins $#{pot} with a #{winner.hand.rank}"
+  // winner.receive_winnings(pot)
+  // @pot = 0
+  // return_cards
 
   takeBets() {
     this.players.forEach( player => (
@@ -74,11 +91,7 @@ class Game {
       //display status of bet
     }
 
-
-
-
-
-  }
+   }
 //until no_raises
 //       no_raises = true
 //       players.each_with_index do |player, i|
