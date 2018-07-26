@@ -43,6 +43,23 @@ class Player {
     return amount;
   }
 
+  respondBet() {
+    
+  }
+
+  //   respond_bet {
+  //     console.log( "(c)all, (b)et, or (f)old? > ")
+  //     response = gets.chomp.downcase[0]
+  //     case response
+  //     when 'c' then :call
+  //     when 'b' then :bet
+  //     when 'f' then :fold
+  //     else
+  //       puts 'must be (c)all, (b)et, or (f)old'
+  //       respond_bet
+  //     end
+  //   end
+
 
 
 }
@@ -72,21 +89,6 @@ class Player {
 //
 //
 //
-//
-//
-
-//   respond_bet {
-//     console.log( "(c)all, (b)et, or (f)old? > ")
-//     response = gets.chomp.downcase[0]
-//     case response
-//     when 'c' then :call
-//     when 'b' then :bet
-//     when 'f' then :fold
-//     else
-//       puts 'must be (c)all, (b)et, or (f)old'
-//       respond_bet
-//     end
-//   end
 //
 //   get_bet {
 //     console.log( "Bet (bankroll: $#{bankroll}) > ")

@@ -28,11 +28,16 @@ class Game {
     this.deck = shuffle(this.deck);
     // this.resetPlayers();
     const pile = this.deck.dealPile();
-    const hand = this.deck.dealHand();
-    const hand2 = this.deck.dealHand();
-    let pokerHand = new PokerHand(hand, pile);
-    let pokerHand2 = new PokerHand(hand2, pile);
-    debugger
+
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      const hand = this.deck.dealHand();
+      const pokerHand = new PokerHand(hand, pile);
+    }
+
+    // let pokerHand = new PokerHand(hand, pile);
+    // let pokerHand2 = new PokerHand(hand2, pile);
+    // debugger
 //     this.take_bets
 //     this.trade_cards
 //     this.take_bets
