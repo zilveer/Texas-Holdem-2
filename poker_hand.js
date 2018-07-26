@@ -31,6 +31,10 @@ class PokerHand extends WinningHands {
     ];
   }
 
+  set_card(n) {
+    return this.handPile().find ( card => ( this.card_value_count(card.value) == n ));
+  }
+
   rank() {
 
   }
@@ -144,13 +148,6 @@ class PokerHand extends WinningHands {
     }
     return straight.every( card => hand.indexOf(card) > -1  );
   }
-
-  straight() {
-    
-  }
-
-
-
 
 
 
