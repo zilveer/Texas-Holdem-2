@@ -15,8 +15,7 @@ class Game {
   }
 
   winner() {
-    //players max bankroll
-    ///////////////////
+    return Math.max.apply(Math, this.players.map( player => { return player.bankroll; }));
   }
 
   play() {
