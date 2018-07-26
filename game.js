@@ -9,15 +9,15 @@ class Game {
     let pokerHand = new PokerHand();
     let pokerHand2 = new PokerHand();
 
-    const pile = new Hand([ new Card('spades', 'ace'), new Card('spades', 'jack'), new Card('spades', 'queen'),new Card('spades', 'king'), new Card('spades', 'ten')   ]).hand;
+    const pile = new Hand([ new Card('hearts', 'ace'), new Card('hearts', 'jack'), new Card('hearts', 'queen'),new Card('hearts', 'king'), new Card('hearts', 'five')   ]).hand;
 
     pokerHand.pile = pile;
     pokerHand2.pile = pile;
 
-    pokerHand.hand = new Hand([ new Card('diamonds', 'eight'), new Card('spades', 'eight')  ]).hand;
+    pokerHand.hand = new Hand([ new Card('hearts', 'ten'), new Card('hearts', 'nine')  ]).hand;
 
     pokerHand2.hand = new Hand([ new Card('diamonds', 'nine'), new Card('spades', 'seven')  ]).hand;
-pokerHand2.isStraightHelper()
+    pokerHand.isRoyalFlush();
 
 debugger
   }

@@ -126,11 +126,13 @@ class PokerHand extends WinningHands {
   }
 
   isStraightFlush() {
-    return this.isStraight() && this.isFlush();
+    const comparator = new PokerHand(this.isStraightHelper(), []);
+    return comparator.isStraight() && comparator.isFlush();
   }
 
   isRoyalFlush() {
-    return this.isRoyal() && this.isStraightFlush();
+    const comparator = new PokerHand(this.isStraightHelper(), []);
+    return comparator.isRoyal() && comparator.isStraightFlush();
   }
 
   isStraight() {
@@ -140,7 +142,7 @@ class PokerHand extends WinningHands {
   isStraightHelper() {
     let straight;
     const values = this.hand[0].values();
-    const hand = unique( sort(this.handPile()).map(
+    const hand = unique( sort(this.handPile()).reverse().map(
       card => ( card.value )));
     if ( this.any('ace') && this.any('two') ) {
       straight = values.slice(0, 4).concat(['ace']);
@@ -148,12 +150,14 @@ class PokerHand extends WinningHands {
         for (var i = 0; i < hand.length-4; i++) {
           const sample = hand.slice(i, i+5);
           const start = values.indexOf(sample[0]);
+
           straight = values.slice(start, start+5);
           if ( straight.every( card => sample.indexOf(card) > -1  ) ) {
             return this.handPile().filter( card => (straight.includes(card.value)));
           }
         }
     }
+
     if ( straight.every( card => hand.indexOf(card) > -1  ) ) {
       return this.handPile().filter( card => (straight.includes(card.value)));
     } else {
