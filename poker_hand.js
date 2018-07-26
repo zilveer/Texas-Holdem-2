@@ -36,9 +36,29 @@ class PokerHand extends WinningHands {
   }
 
   rank() {
-    for (var i = 0; i < this.handTypes().length; i++) {
-      // this.handTypes()[i]
+    if (this.isRoyalFlush) {
+      return 'royalFlush';
+    } else if (this.isStraightFlush) {
+      return 'straightFlush';
+    } else if (this.isFourKind) {
+      return 'fourKind';
+    } else if (this.isHouse) {
+      return 'house';
+    } else if (this.isFlush) {
+      return 'flush';
+    } else if (this.isStraight) {
+      return 'straight';
+    } else if (this.isThreeKind) {
+      return 'threeKind';
+    } else if (this.isTwoPair) {
+      return 'twoPair';
+    } else if (this.isPair) {
+      return 'onePair';
+    } else if (this.isTwoPair) {
+      return 'twoPair';
     }
+
+
   }
 
   isGreaterThan(otherPokerHand) {
@@ -157,7 +177,6 @@ class PokerHand extends WinningHands {
           }
         }
     }
-
     if ( straight.every( card => hand.indexOf(card) > -1  ) ) {
       return this.handPile().filter( card => (straight.includes(card.value)));
     } else {
