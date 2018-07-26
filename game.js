@@ -15,10 +15,39 @@ class Game {
   }
 
   winner() {
-    //players.max
+    //players max bankroll
   }
 
   play() {
+
+  }
+
+
+  //     deck.shuffle
+  //     reset_players
+  //     deal_cards
+  //     take_bets
+  //     trade_cards
+  //     take_bets
+  //     end_round
+
+
+  playRound() {
+    this.deck = shuffle(this.deck);
+    this.resetPlayers();
+    this.dealCards();
+
+  }
+
+  takeBets() {
+    this.players.forEach( player => (
+      player.resetCurrentBet()
+    ));
+
+   const high_bet = 0;
+   const no_raises = false;
+   const most_recent_better = null;
+
 
   }
 
@@ -26,19 +55,26 @@ class Game {
     console.log('hands!');
     for (var i = 0; i < this.players.length; i++) {
       const player = this.players[i];
-      if (player.isFolded) { continue; }
-      player.dealIn(this.deck.dealHand());
+      if (player.isFolded()) { continue; }
+      console.log(`${player.hand} ${player.hand.rank()}`);
     }
   }
 
-    // def show_hands
-    //   puts "HANDS"
-    //   players.each do |player|
-    //     next if player.folded?
-    //     puts "#{player.hand} (#{player.hand.rank})"
-    //   end
-    // end
+  roundOver() {
+    let count = 0;
+    this.players.forEach( player => {
+      if (!player.isFolded()) { count += 1; }
+    });
+    return count <= 1;
+  }
 
+  gameOver() {
+    let count = 0;
+    this.players.forEach( player => {
+      if (player.bankroll > 0) { count += 1; }
+    });
+    return count <= 1;
+  }
 
   dealCards() {
     for (var i = 0; i < this.players.length; i++) {
@@ -112,15 +148,6 @@ debugger
 //     end_game
 //   end
 //
-//   def play_round
-//     deck.shuffle
-//     reset_players
-//     deal_cards
-//     take_bets
-//     trade_cards
-//     take_bets
-//     end_round
-//   end
 //
 
 //   def take_bets
@@ -187,23 +214,6 @@ debugger
 //     winner.receive_winnings(pot)
 //     @pot = 0
 //     return_cards
-//   end
-//
-
-
-//
-
-//
-//   def round_over?
-//     players.count { |player| !player.folded? } <= 1
-//   end
-//
-//   def game_over?
-//     players.count { |player| player.bankroll > 0 } <= 1
-//   end
-//
-//   def add_players(n, buy_in)
-//     n.times { @players << Player.buy_in(buy_in) }
 //   end
 //
 //   def end_game
