@@ -20,11 +20,11 @@ class Deck {
   }
 
   dealPile() {
-    return new Pile (this.take(2));
+    return new Pile (this.take(3));
   }
 
   dealHand() {
-    return new Hand (this.take(3));
+    return new Hand (this.take(2));
   }
 
   take(n) {

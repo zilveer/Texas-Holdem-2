@@ -1,6 +1,64 @@
 // import Deck from './deck';
 class Game {
 
+  constructor(players){
+    this.players = players;
+    this.pot = 0;
+    this.deck = new Deck();
+  }
+
+  resetPlayers() {
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      player.unfold();
+    }
+  }
+
+  winner() {
+    //players.max
+  }
+
+  play() {
+
+  }
+
+  showHands() {
+    console.log('hands!');
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      if (player.isFolded) { continue; }
+      player.dealIn(this.deck.dealHand());
+    }
+  }
+
+    // def show_hands
+    //   puts "HANDS"
+    //   players.each do |player|
+    //     next if player.folded?
+    //     puts "#{player.hand} (#{player.hand.rank})"
+    //   end
+    // end
+
+
+  dealCards() {
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      if (player.bankroll <= 0) { continue; }
+      player.dealIn(this.deck.dealHand());
+    }
+  }
+
+  returnCards() {
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      this.deck.returnCards(player.returnCards());
+    }
+  }
+
+  addToPot(amount) {
+    this.pot += amount;
+  }
+
   setup() {
     // let deck = new Deck();
     // let pile = deck.dealPile();
@@ -45,18 +103,9 @@ debugger
 
 }
 
-// 
+//
 // require_relative './player'
 // require_relative './deck'
-//
-// class Game
-//   attr_reader :players, :pot, :deck
-//
-//   def initialize
-//     @players = []
-//     @pot = 0
-//     @deck = Deck.new
-//   end
 //
 //   def play
 //     play_round until game_over?
@@ -73,17 +122,7 @@ debugger
 //     end_round
 //   end
 //
-//   def reset_players
-//     players.each(&:unfold)
-//   end
-//
-//   def deal_cards
-//     players.each do |player|
-//       next if player.bankroll <= 0
-//       player.deal_in(deck.deal_hand)
-//     end
-//   end
-//
+
 //   def take_bets
 //     players.each(&:reset_current_bet)
 //     high_bet = 0
@@ -140,17 +179,6 @@ debugger
 //     puts "Player #{index + 1}'s hand: #{players[index].hand}"
 //   end
 //
-//   def trade_cards
-//     players.each_with_index do |player, i|
-//       next if player.folded?
-//       print "Player #{i + 1}, which cards do you want to trade: "
-//       puts player.hand
-//       cards = player.get_cards_to_trade
-//       deck.return(cards)
-//       player.trade_cards(cards, deck.take(cards.count))
-//     end
-//   end
-//
 //   def end_round
 //     show_hands
 //     puts
@@ -161,25 +189,10 @@ debugger
 //     return_cards
 //   end
 //
-//   def return_cards
-//     players.each { |player| @deck.return(player.return_cards) }
-//   end
+
+
 //
-//   def winner
-//     players.max
-//   end
-//
-//   def show_hands
-//     puts "HANDS"
-//     players.each do |player|
-//       next if player.folded?
-//       puts "#{player.hand} (#{player.hand.rank})"
-//     end
-//   end
-//
-//   def add_to_pot(amount)
-//     (@pot += amount) && amount
-//   end
+
 //
 //   def round_over?
 //     players.count { |player| !player.folded? } <= 1
