@@ -47,8 +47,14 @@ class PokerHand extends WinningHands {
     return this.handPile()[sorted.length-1];
   }
 
-  cardsWithout(value) {
-    return this.handPile().filter( card => ( card.value != value ));
+  cardsWithout(valueArr) {
+    const filtered = [];
+    this.handPile().forEach( card => {
+      if ( !valueArr.includes(card.value) ) {
+        filtered.push(card);
+      }
+    });
+    return filtered;
   }
 
   any(valueOrSuit) {
@@ -116,24 +122,26 @@ class PokerHand extends WinningHands {
   }
 
   isHouse() {
-    return isThreeKind() && isPair();
+    return this.isThreeKind() && this.isPair();
   }
 
   isStraightFlush() {
-    return isStraight() && isFlush();
+    return this.isStraight() && this.isFlush();
   }
 
   isRoyalFlush() {
-    return isRoyal() && isStraightFlush();
+    return this.isRoyal() && this.isStraightFlush();
   }
 
   isStraight() {
+    return !!this.isStraightHelper();
+  }
 
+  isStraightHelper() {
     let straight;
     const values = this.hand[0].values();
     const hand = unique( sort(this.handPile()).map(
       card => ( card.value )));
-
     if ( this.any('ace') && this.any('two') ) {
       straight = values.slice(0, 4).concat(['ace']);
     } else {
@@ -142,11 +150,15 @@ class PokerHand extends WinningHands {
           const start = values.indexOf(sample[0]);
           straight = values.slice(start, start+5);
           if ( straight.every( card => sample.indexOf(card) > -1  ) ) {
-            return true;
+            return this.handPile().filter( card => (straight.includes(card.value)));
           }
         }
     }
-    return straight.every( card => hand.indexOf(card) > -1  );
+    if ( straight.every( card => hand.indexOf(card) > -1  ) ) {
+      return this.handPile().filter( card => (straight.includes(card.value)));
+    } else {
+      return null;
+    }
   }
 
 
