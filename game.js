@@ -16,27 +16,23 @@ class Game {
 
   winner() {
     //players max bankroll
+    ///////////////////
   }
 
   play() {
-
+    while (!gameOver) {
+      this.playRound();
+    }
   }
-
-
-  //     deck.shuffle
-  //     reset_players
-  //     deal_cards
-  //     take_bets
-  //     trade_cards
-  //     take_bets
-  //     end_round
-
 
   playRound() {
     this.deck = shuffle(this.deck);
     this.resetPlayers();
     this.dealCards();
-
+//     this.take_bets
+//     this.trade_cards
+//     this.take_bets
+//     this.end_round
   }
 
   takeBets() {
@@ -47,7 +43,7 @@ class Game {
    const high_bet = 0;
    const no_raises = false;
    const most_recent_better = null;
-
+///////////////////
 
   }
 
@@ -95,7 +91,7 @@ class Game {
     this.pot += amount;
   }
 
-  setup() {
+  setup() { //testing purposes
     // let deck = new Deck();
     // let pile = deck.dealPile();
     // let hand = deck.dealHand();
@@ -139,15 +135,6 @@ debugger
 
 }
 
-//
-// require_relative './player'
-// require_relative './deck'
-//
-//   def play
-//     play_round until game_over?
-//     end_game
-//   end
-//
 //
 
 //   def take_bets

@@ -35,16 +35,48 @@ class Player {
     return cards;
   }
 
+  takeBet(totalBet) {
+    const amount = totalBet - this.currentBet;
+    if ( amount > this.bankroll ) { return null; }
+    this.currentBet = totalBet;
+    this.bankroll -= amount;
+    return amount;
+  }
+
 
 
 }
 
-//   def self.buy_in(bankroll)
-//     Player.new(bankroll)
-//   end
+
+
+
+
+
 //
-//   def respond_bet
-//     print "(c)all, (b)et, or (f)old? > "
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//   respond_bet {
+//     console.log( "(c)all, (b)et, or (f)old? > ")
 //     response = gets.chomp.downcase[0]
 //     case response
 //     when 'c' then :call
@@ -56,32 +88,9 @@ class Player {
 //     end
 //   end
 //
-//   def get_bet
-//     print "Bet (bankroll: $#{bankroll}) > "
+//   get_bet {
+//     console.log( "Bet (bankroll: $#{bankroll}) > ")
 //     bet = gets.chomp.to_i
 //     raise 'not enough money' unless bet <= bankroll
 //     bet
 //   end
-//
-//   def get_cards_to_trade
-//     print "Cards to trade? (ex. '1, 4, 5') > "
-//     card_indices = gets.chomp.split(', ').map(&:to_i)
-//     raise 'cannot trade more than three cards' unless card_indices.count <= 3
-//     puts
-//     card_indices.map { |i| hand.cards[i - 1] }
-//   end
-//
-//   def take_bet(total_bet)
-//     amount = total_bet - @current_bet
-//     raise 'not enough money' unless amount <= bankroll
-//     @current_bet = total_bet
-//     @bankroll -= amount
-//     amount
-//   end
-//
-//   def <=>(other_player)
-//     hand
-//     other_player.hand
-//     hand <=> other_player.hand
-//   end
-// end
