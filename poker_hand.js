@@ -36,37 +36,38 @@ class PokerHand extends WinningHands {
   }
 
   rank() {
-    if (this.isRoyalFlush) {
+    if (this.isRoyalFlush()) {
       return 'royalFlush';
-    } else if (this.isStraightFlush) {
+    } else if (this.isStraightFlush()) {
       return 'straightFlush';
-    } else if (this.isFourKind) {
+    } else if (this.isFourKind()) {
       return 'fourKind';
-    } else if (this.isHouse) {
+    } else if (this.isHouse()) {
       return 'house';
-    } else if (this.isFlush) {
+    } else if (this.isFlush()) {
       return 'flush';
-    } else if (this.isStraight) {
+    } else if (this.isStraight()) {
       return 'straight';
-    } else if (this.isThreeKind) {
+    } else if (this.isThreeKind()) {
       return 'threeKind';
-    } else if (this.isTwoPair) {
+    } else if (this.isTwoPair()) {
       return 'twoPair';
-    } else if (this.isPair) {
+    } else if (this.isPair()) {
       return 'onePair';
-    } else if (this.isTwoPair) {
+    } else if (this.isTwoPair()) {
       return 'twoPair';
+    } else {
+      return 'highCard';
     }
-
-
   }
 
   isGreaterThan(otherPokerHand) {
-    return handTypes().indexOf(this.rank()) > handTypes().indexOf(otherPokerHand.rank());
+    return this.handTypes().indexOf(this.rank()) < this.handTypes().indexOf(otherPokerHand.rank());
   }
 
   highCard() {
-    return this.handPile()[sorted.length-1];
+    const sorted = sort(this.handPile());
+    return sorted[sorted.length-1];
   }
 
   cardsWithout(valueArr) {
@@ -90,7 +91,7 @@ class PokerHand extends WinningHands {
   }
 
   isRoyal() {
-    const royals = this.hand[0].royals();
+    const royals = this.handPile()[0].royals();
     const hand = this.handPile().map(
       card => ( card.value ));
     let count = 0;
@@ -147,11 +148,19 @@ class PokerHand extends WinningHands {
   }
 
   isStraightFlush() {
+    if ( !this.isStraight() ) {
+      return null;
+    }
+
     const comparator = new PokerHand(this.isStraightHelper(), []);
     return comparator.isStraight() && comparator.isFlush();
   }
 
   isRoyalFlush() {
+    if ( !this.isStraight() ) {
+      return null;
+    }
+
     const comparator = new PokerHand(this.isStraightHelper(), []);
     return comparator.isRoyal() && comparator.isStraightFlush();
   }
@@ -176,6 +185,9 @@ class PokerHand extends WinningHands {
             return this.handPile().filter( card => (straight.includes(card.value)));
           }
         }
+    }
+    if (straight === undefined) {
+      return null;
     }
     if ( straight.every( card => hand.indexOf(card) > -1  ) ) {
       return this.handPile().filter( card => (straight.includes(card.value)));
