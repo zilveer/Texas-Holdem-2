@@ -1,7 +1,9 @@
-class Hand {
+class Hand extends PokerHand {
 
-  constructor(cards) {
+  constructor(cards, pile) {
+    super(cards, pile);
     this.hand = cards;
+    this.pile = pile;
     sort(this.hand);
     this.id = Math.floor(Math.random()*10000);
     this.render();

@@ -1,10 +1,10 @@
 class PokerHand extends WinningHands {
 
-  constructor(hand,pile) {
-    super(hand,pile);
-    this.hand = hand;
-    this.pile = pile;
-  }
+  // constructor(hand,pile) {
+  //   super(hand,pile);
+  //   this.hand = hand;
+  //   this.pile = pile;
+  // }
 
   card_value_count(value) {
     let sum= 0;

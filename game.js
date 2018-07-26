@@ -26,23 +26,33 @@ class Game {
 
   playRound() {
     this.deck = shuffle(this.deck);
-    // this.resetPlayers();
-    const pile = this.deck.dealPile();
+    this.resetPlayers();
+    const pile = this.deck.dealPile(); //3 cards
 
     for (var i = 0; i < this.players.length; i++) {
       const player = this.players[i];
-      const hand = this.deck.dealHand();
-      const pokerHand = new PokerHand(hand, pile);
+      if (player.bankroll <= 0) { continue; }
+      player.dealIn(this.deck.dealHand());
+      player.hand.pile = pile;
     }
 
-    // let pokerHand = new PokerHand(hand, pile);
-    // let pokerHand2 = new PokerHand(hand2, pile);
-    // debugger
-//     this.take_bets
-//     this.trade_cards
-//     this.take_bets
+    this.take_bets();
+
+    pile.pile.push(this.deck.take(1)); //4 cards
+
+    this.take_bets();
+
+    pile.pile.push(this.deck.take(1)); //5 cards
+
+    this.take_bets();
+
 //     this.end_round
   }
+
+  endRound() {
+    this.showHands();
+  }
+
 
   takeBets() {
     this.players.forEach( player => (
@@ -105,11 +115,14 @@ class Game {
   }
 
   showHands() {
-    console.log('hands!');
+    dealerMessage = document.getElementById('dealer-message-box');
+    dealerMessage.innerHTML = 'Show hands!';
     for (var i = 0; i < this.players.length; i++) {
       const player = this.players[i];
       if (player.isFolded()) { continue; }
-      console.log(`${player.hand} ${player.hand.rank()}`);
+      var li = document.createElement('li');
+      li.innerHTML = `${player.hand} ${player.hand.rank()}`;
+      dealerMessage.appendChild(li);
     }
   }
 
@@ -127,14 +140,6 @@ class Game {
       if (player.bankroll > 0) { count += 1; }
     });
     return count <= 1;
-  }
-
-  dealCards() {
-    for (var i = 0; i < this.players.length; i++) {
-      const player = this.players[i];
-      if (player.bankroll <= 0) { continue; }
-      player.dealIn(this.deck.dealHand());
-    }
   }
 
   returnCards() {

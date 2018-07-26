@@ -5,6 +5,10 @@ class Player {
     this.currentBet = 0;
   }
 
+  // render() {
+  //
+  // }
+
   dealIn(hand) {
     this.hand = hand;
   }
@@ -44,7 +48,7 @@ class Player {
   }
 
   respondBet() {
-    
+
   }
 
   //   respond_bet {
