@@ -145,6 +145,10 @@ class PokerHand extends WinningHands {
     return straight.every( card => hand.indexOf(card) > -1  );
   }
 
+  straight() {
+    
+  }
+
 
 
 
