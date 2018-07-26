@@ -3,15 +3,7 @@ class Player {
   constructor(bankroll) {
     this.bankroll = bankroll;
     this.currentBet = 0;
-    // this.render();
   }
-  //
-  // render() {
-  //   const hands = document.getElementById('hands');
-  //   var li = document.createElement('li');
-  //   li.id = `${this.id}`;
-  //   hands.appendChild(li);
-  // }
 
   dealIn(hand) {
     this.hand = hand;

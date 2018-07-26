@@ -24,22 +24,15 @@ class Game {
     }
   }
 
-  setup() { //testing purposes
-    // let deck = new Deck();
-    let pile = this.deck.dealPile();
-    let hand = this.deck.dealHand();
-    let hand2 = this.deck.dealHand();
-
+  playRound() {
+    this.deck = shuffle(this.deck);
+    // this.resetPlayers();
+    const pile = this.deck.dealPile();
+    const hand = this.deck.dealHand();
+    const hand2 = this.deck.dealHand();
     let pokerHand = new PokerHand(hand, pile);
     let pokerHand2 = new PokerHand(hand2, pile);
     debugger
-  }
-
-
-  playRound() {
-    this.deck = shuffle(this.deck);
-    this.resetPlayers();
-    this.dealCards();
 //     this.take_bets
 //     this.trade_cards
 //     this.take_bets

@@ -13,6 +13,7 @@ class Deck {
     var img = document.createElement('img');
     img.src = './images/cards/b.gif';
     var deck = document.getElementById('deck');
+    deck.innerHTML = '';
     deck.appendChild(img);
   }
 
