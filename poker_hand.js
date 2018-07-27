@@ -36,12 +36,41 @@ class PokerHand extends WinningHands {
   }
 
   rank() {
-    for (var i = 0; i < this.handTypes().length; i++) {
-     const handType = this.handTypes()[i];
-     if (this[`is${handType}`]()) {
-       return handType;
-     }
+    // for (var i = 0; i < this.handTypes().length; i++) {
+    //
+    //  const handType = this.handTypes()[i];
+    //
+    //  if (this[`is${handType}`]()) {
+    //    return handType;
+    //  }
+    // }
+    if (this.isRoyalFlush()) {
+      return 'RoyalFlush';
+    } else if (this.isStraightFlush()) {
+      return 'StraightFlush';
+    } else if (this.isFourKind()) {
+      return 'FourKind';
+    } else if (this.isHouse()) {
+      return 'House';
+    } else if (this.isFlush()) {
+      return 'Flush';
+    } else if (this.isStraight()) {
+      return 'Straight';
+    } else if (this.isThreeKind()) {
+      return 'ThreeKind';
+    } else if (this.isTwoPair()) {
+      return 'TwoPair';
+    } else if (this.isPair()) {
+      return 'OnePair';
+    } else if (this.isTwoPair()) {
+      return 'TwoPair';
+    } else {
+      return 'HighCard';
     }
+  }
+
+  isEqual(otherPokerHand) {
+    return this.rank() === otherPokerHand.rank();
   }
 
   isGreaterThan(otherPokerHand) {
@@ -71,6 +100,10 @@ class PokerHand extends WinningHands {
       }
     }
     return false;
+  }
+
+  isHighCard() {
+    return true;
   }
 
   isRoyal() {

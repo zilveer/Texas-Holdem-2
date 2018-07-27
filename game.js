@@ -15,7 +15,43 @@ class Game {
   }
 
   winner() {
-    return Math.max.apply(Math, this.players.map( player => { return player.bankroll; }));
+    // return Math.max.apply(Math, this.players.map( player => { return player.bankroll; }));
+    let strongestPlayer = null;
+    for (var i = 0; i < this.players.length-1; i++) {
+      for (var j = 1; j < this.players.length; j++) {
+
+        const player = this.players[i];
+        const otherPlayer = this.players[j];
+        let strongPlayer = null;
+
+        strongPlayer = this.comparator(player, otherPlayer);
+        if ( strongestPlayer === null ) { strongestPlayer = strongPlayer; }
+        strongestPlayer = this.comparator(strongPlayer, strongestPlayer);
+
+      }
+
+    }
+
+    return strongestPlayer;
+  }
+
+  comparator(player, otherPlayer) {
+    let strongPlayer;
+
+    if (player.isEqual(otherPlayer)) {
+      if (player.hand.tieBreaker(otherPlayer.hand)) {
+        strongPlayer = player;
+      } else {
+        strongPlayer = otherPlayer;
+      }
+    } else {
+      if (player.isGreaterThan(otherPlayer)) {
+        strongPlayer = player;
+      } else {
+        strongPlayer = otherPlayer;
+      }
+    }
+    return strongPlayer;
   }
 
   play() {
@@ -25,35 +61,54 @@ class Game {
   }
 
   playRound() {
-    this.deck = shuffle(this.deck);
-    this.resetPlayers();
-    const pile = this.deck.dealPile(); //3 cards
+    // while (!this.roundOver()) {
+      this.deck = shuffle(this.deck);
+      this.resetPlayers();
+      const pile = this.deck.dealPile(); //3 cards
 
-    for (var i = 0; i < this.players.length; i++) {
-      const player = this.players[i];
-      if (player.bankroll <= 0) { continue; }
-      player.dealIn(this.deck.dealHand());
-      player.hand.pile = pile;
-    }
+      for (let i = 0; i < this.players.length; i++) {
+        const player = this.players[i];
+        if (player.bankroll <= 0) { continue; }
+        player.dealIn(this.deck.dealHand());
+        player.hand.pile = pile.pile;
+      }
 
-    this.take_bets();
 
-    pile.pile.push(this.deck.take(1)); //4 cards
+      // this.take_bets();
 
-    this.take_bets();
+      pile.pile.push(this.deck.take(1)[0]); //4 cards
+      for (let i = 0; i < this.players.length; i++) {
+        const player = this.players[i];
+        if (player.bankroll <= 0) { continue; }
+        player.hand.pile = pile.pile;
+      }
+      pile.render();
 
-    pile.pile.push(this.deck.take(1)); //5 cards
 
-    this.take_bets();
+      // this.take_bets();
 
-    this.end_round();
+      pile.pile.push(this.deck.take(1)[0]); //5 cards
+      for (let i = 0; i < this.players.length; i++) {
+        const player = this.players[i];
+        if (player.bankroll <= 0) { continue; }
+        player.hand.pile = pile.pile;
+      }
+      pile.render();
+
+      // this.take_bets();
+
+    // }
+    // this.players[1].hand.rank();
+    // this.winner();
+
+    this.endRound();
   }
 
   endRound() {
-    dealerMessage = document.getElementById('dealer-message-box');
+    const dealerMessage = document.getElementById('dealer-message-box');
     var li = document.createElement('li');
     const winningHand = this.winner().hand;
-
+    // const winningHand ='hello from endround';
     this.showHands();
 
     li.innerHTML = `WINNER - ${winningHand} wins $${this.pot} with a ${winningHand.rank()}`;
@@ -63,13 +118,6 @@ class Game {
     this.pot = 0;
     this.returnCards();
   }
-  // show_hands
-  // puts
-  // puts "WINNER"
-  // puts "#{winner.hand} wins $#{pot} with a #{winner.hand.rank}"
-  // winner.receive_winnings(pot)
-  // @pot = 0
-  // return_cards
 
   takeBets() {
     this.players.forEach( player => (
@@ -92,43 +140,11 @@ class Game {
     }
 
    }
-//until no_raises
-//       no_raises = true
-//       players.each_with_index do |player, i|
-//         next if player.folded?
-//         break if most_recent_better == player || round_over?
-//
-//         display_status(i, high_bet)
-//
-//         begin
-//           response = player.respond_bet
-//           case response
-//           when :call
-//             add_to_pot(player.take_bet(high_bet))
-//           when :bet
-//             raise "not enough money" unless player.bankroll >= high_bet
-//             no_raises = false
-//             most_recent_better = player
-//             bet = player.get_bet
-//             raise "bet must be at least $#{high_bet}" unless bet >= high_bet
-//             rs = player.take_bet(bet)
-//             high_bet = bet
-//             add_to_pot(rs)
-//           when :fold
-//             player.fold
-//           end
-//         rescue => error
-//           puts "#{error.message}"
-//           retry
-//         end
-//
-//       end
-//     end
 
   }
 
   showHands() {
-    dealerMessage = document.getElementById('dealer-message-box');
+    const dealerMessage = document.getElementById('dealer-message-box');
     dealerMessage.innerHTML = 'Show hands!';
     for (var i = 0; i < this.players.length; i++) {
       const player = this.players[i];

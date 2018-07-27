@@ -1,7 +1,7 @@
 class WinningHands {
 
   handPile() {
-    // debugger
+
     return sort(this.hand.concat(this.pile));
   }
 
@@ -34,16 +34,16 @@ class WinningHands {
   }
 
   lowPair() {
-    if (this.pairs().length < 2 ) {
-      return null;
-    }
+    // if (this.pairs().length < 2 ) {
+    //   return null;
+    // }
     return this.pairs()[0][0].isGreaterThan(this.pairs()[1][0]) ? this.pairs()[0] : this.pairs()[1];
   }
 
   highPair() {
-    if (this.pairs().length < 2 ) {
-      return null;
-    }
+    // if (this.pairs().length < 2 ) {
+    //   return null;
+    // }
     return this.pairs()[1][0].isGreaterThan(this.pairs()[0][0]) ? this.pairs()[0] : pairs[1];
   }
 

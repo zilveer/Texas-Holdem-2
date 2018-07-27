@@ -13,6 +13,15 @@ class Player {
     this.hand = hand;
   }
 
+  isEqual(otherPlayer) {
+    // debugger
+    return this.hand.isEqual(otherPlayer.hand);
+  }
+
+  isGreaterThan(otherPlayer) {
+    return this.hand.isGreaterThan(otherPlayer.hand);
+  }
+
   receiveWinnings(amount) {
     this.bankroll += amount;
   }
