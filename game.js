@@ -135,45 +135,43 @@ class Game {
       //   player.renderMoney();
       // });
 
-      // var foldButton =
-      document.getElementById(`${player.name}fold`).style.visibility = 'display';
-      // var callButton =
-      document.getElementById(`${player.name}call`).style.visibility = 'display';
-      // var betButton =
-      document.getElementById(`${player.name}bet`).style.visibility = 'display';
-      //         begin
-      //           response = player.respond_bet
-      //           case response
-      //           when :call
-      //             add_to_pot(player.take_bet(high_bet))
-      //           when :bet
-      //             raise "not enough money" unless player.bankroll >= high_bet
-      //             no_raises = false
-      //             most_recent_better = player
-      //             bet = player.get_bet
-      //             raise "bet must be at least $#{high_bet}" unless bet >= high_bet
-      //             rs = player.take_bet(bet)
-      //             high_bet = bet
-      //             add_to_pot(rs)
-      //           when :fold
-      //             player.fold
-      //           end
-      //         rescue => error
-      //           puts "#{error.message}"
-      //           retry
-      //         end
-      //
-      //       end
-      //     end
-      //   end
+// .style.visibility = 'display';
+      var foldButton = document.getElementById(`${player.name}fold`);
+      var callButton = document.getElementById(`${player.name}call`);
+      var betButton = document.getElementById(`${player.name}bet`);
+
+      foldButton.addEventListener('click', this.sendFold.bind(this, player));
+      callButton.addEventListener('click', this.sendCall.bind(this, player, high_bet));
+      betButton.addEventListener('click', this.sendBet);
+
+      foldButton.style.visibility = 'display';
+      callButton.style.visibility = 'display';
+      betButton.style.visibility = 'display';
 
 
-
-
+  // no_raises = false;
+  // most_recent_better = player;
+  // const bet = player.get_bet();
+  // console.log("bet must be at least $#{high_bet}") if bet < high_bet;
+  // const rs = player.take_bet(bet);
+  // high_bet = bet;
+  // this.add_to_pot(rs);
 
     }
-
    }
+  }
+
+  sendCall(player, high_bet) {
+    return this.addToPot(player.takeBet(high_bet));
+  }
+
+  sendFold(player) {
+    return player.fold();
+  }
+
+  sendBet() {
+    // return 'bet';
+    // console.log("not enough money") if player.bankroll < high_bet;
 
   }
 

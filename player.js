@@ -53,9 +53,9 @@ class Player {
     callButton.id = `${this.name}call`;
     betButton.id = `${this.name}bet`;
 
-    foldButton.addEventListener('click', this.sendFold);
-    callButton.addEventListener('click', this.sendCall);
-    betButton.addEventListener('click', this.sendBet);
+    // foldButton.addEventListener('click', this.sendFold);
+    // callButton.addEventListener('click', this.sendCall);
+    // betButton.addEventListener('click', this.sendBet);
 
     foldButton.style.visibility = 'hidden';
     callButton.style.visibility = 'hidden';
@@ -68,15 +68,15 @@ class Player {
     handAction.appendChild(betButton);
   }
 
-  sendFold() {
-    return 'fold';
-  }
-  sendCall() {
-    return 'call';
-  }
-  sendBet() {
-    return 'bet';
-  }
+  // sendFold() {
+  //   return 'fold';
+  // }
+  // sendCall() {
+  //   return 'call';
+  // }
+  // sendBet() {
+  //   return 'bet';
+  // }
 
   renderMoney() {
     var moneybox = document.getElementById(`${this.name}-moneybox`);
