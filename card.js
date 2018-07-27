@@ -51,9 +51,9 @@ class Card {
   }
 
   isGreaterThan(otherCard) {
-    if (this.value != otherCard.value) {
+    if (this.value !== otherCard.value) {
       return ( this.values().indexOf(this.value) > this.values().indexOf(otherCard.value) );
-    } else if (this.suit != otherCard.suit) {
+    } else if (this.suit !== otherCard.suit) {
       return ( this.suits().indexOf(this.suit) > this.suits().indexOf(otherCard.suit) );
     }
   }

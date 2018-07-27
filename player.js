@@ -57,9 +57,9 @@ class Player {
     // callButton.addEventListener('click', this.sendCall);
     // betButton.addEventListener('click', this.sendBet);
 
-    foldButton.style.visibility = 'hidden';
-    callButton.style.visibility = 'hidden';
-    betButton.style.visibility = 'hidden';
+    foldButton.style.display = 'none';
+    callButton.style.display = 'none';
+    betButton.style.display = 'none';
 
     var handAction = document.getElementById(`${this.name}-action`);
 

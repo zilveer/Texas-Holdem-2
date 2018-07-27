@@ -5,6 +5,10 @@ class Game {
     this.players = players;
     this.pot = 0;
     this.deck = new Deck();
+
+    this.high_bet = 0;
+    this.most_recent_better = null;
+    this.raises = true;
   }
 
   resetPlayers() {
@@ -66,8 +70,7 @@ class Game {
         player.hand.pile = pile.pile;
       }
 
-
-      this.take_bets();
+      this.takeBets();
 
       pile.pile.push(this.deck.take(1)[0]); //4 cards
       for (let i = 0; i < this.players.length; i++) {
@@ -78,7 +81,7 @@ class Game {
       pile.render();
 
 
-      this.take_bets();
+      this.takeBets();
 
       pile.pile.push(this.deck.take(1)[0]); //5 cards
       for (let i = 0; i < this.players.length; i++) {
@@ -89,7 +92,7 @@ class Game {
       pile.render();
 
 
-      this.take_bets();
+      this.takeBets();
 
     this.endRound();
   }
@@ -111,83 +114,93 @@ class Game {
   }
   // //
   takeBets() {
-    this.resetButtons();
-    this.players.forEach( player => (
-      player.resetCurrentBet()
-    ));
 
-   let high_bet = 0;
-   let most_recent_better = null;
+    for (var j = 0; j < this.players.length; j++) {
+      const player = this.players[j];
+      player.resetCurrentBet();
+    }
 
-   let noRaises = true;
-   while (noRaises) {
-    noRaises = false;
+   this.high_bet = 0;
+   this.most_recent_better = null;
+   this.raises = true;
 
-    for (var i = 0; i < this.players.length; i++) {
+   while (this.raises) {
+
+    this.raises = false;
+
+    // for (var i = 0; i < this.players.length; i++) {
+    let i = 0;
+    while (i < this.players.length)  {
       const player = this.players[i];
-      if (player.isFolded) { continue; }
-      if (most_recent_better === player || this.roundOver() ) { break; }
 
-      this.displayStatus(player, high_bet);
-      // const dealerMessage = document.getElementById('dealer-message-box');
-      // dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
-      //
-      // this.players.forEach ( player => {
-      //   player.renderMoney();
-      // });
+      if (player.isFolded()) { continue; }
+      if (this.most_recent_better === player || this.roundOver() ) { break; }
 
-      this.setButtons();
+      this.displayStatus(player, this.high_bet);
+      this.resetButtons(player);
+      this.setButtons(player); //raises is set to true for bets
+
+
+      i++;
 
     }
+
    }
   }
 
-  setButtons() {
+  setButtons(player) {
+
     var foldButton = document.getElementById(`${player.name}fold`);
     var callButton = document.getElementById(`${player.name}call`);
     var betButton = document.getElementById(`${player.name}bet`);
 
     foldButton.addEventListener('click', this.sendFold.bind(this, player));
-    callButton.addEventListener('click', this.sendCall.bind(this, player, high_bet));
-    betButton.addEventListener('click', this.sendBet.bind(this, player, noRaises, most_recent_better, high_bet));
+    callButton.addEventListener('click', this.sendCall.bind(this, player));
+    betButton.addEventListener('click', this.sendBet.bind(this, player));
 
-    foldButton.style.visibility = 'display';
-    callButton.style.visibility = 'display';
-    betButton.style.visibility = 'display';
+    foldButton.style.display = 'block';
+    callButton.style.display = 'block';
+    betButton.style.display = 'block';
+
   }
 
-  resetButtons() {
+  resetButtons(player) {
     var foldButton = document.getElementById(`${player.name}fold`);
     var callButton = document.getElementById(`${player.name}call`);
     var betButton = document.getElementById(`${player.name}bet`);
 
     foldButton.removeEventListener('click', this.sendFold.bind(this, player));
-    callButton.removeEventListener('click', this.sendCall.bind(this, player, high_bet));
-    betButton.removeEventListener('click', this.sendBet.bind(this, player, noRaises, most_recent_better, high_bet));
+    callButton.removeEventListener('click', this.sendCall.bind(this, player));
+    betButton.removeEventListener('click', this.sendBet.bind(this, player));
 
-    foldButton.style.visibility = 'hidden';
-    callButton.style.visibility = 'hidden';
-    betButton.style.visibility = 'hidden';
+    foldButton.style.display = 'none';
+    callButton.style.display = 'none';
+    betButton.style.display = 'none';
   }
 
-  sendCall(player, high_bet) {
-    return this.addToPot(player.takeBet(high_bet));
+  sendCall(player) {
+    this.addToPot(player.takeBet(this.high_bet));
   }
 
   sendFold(player) {
-    return player.fold();
+    player.fold();
   }
 
-  sendBet(player, noRaises, most_recent_better, high_bet) {
+  sendBet(player) {
     // console.log("not enough money") if player.bankroll < high_bet;
-    noRaises = true;
-    most_recent_better = player;
+    this.raises = true;
+    this.most_recent_better = player;
     const bet = player.getBet();
     // console.log("bet must be at least $#{high_bet}") if bet < high_bet;
     const takeBet = player.takeBet(bet);
-    high_bet = bet;
+    this.high_bet = bet;
     this.addToPot(takeBet);
   }
+
+
+
+
+
 
   showHands() {
     const dealerMessage = document.getElementById('dealer-message-box');
