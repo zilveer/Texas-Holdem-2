@@ -97,21 +97,6 @@ class Game {
     this.endRound();
   }
 
-  endRound() {
-    const dealerMessage = document.getElementById('dealer-message-box');
-    var li = document.createElement('li');
-
-    const winningHand = this.winner().hand;
-    // const winningHand ='hello from endround';
-    this.showHands();
-
-    li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
-
-    dealerMessage.appendChild(li);
-    this.winner().receiveWinnings(this.pot);
-    this.pot = 0;
-    this.returnCards();
-  }
   // //
   takeBets() {
 
@@ -129,20 +114,24 @@ class Game {
     this.raises = false;
 
     // for (var i = 0; i < this.players.length; i++) {
-    let i = 0;
-    while (i < this.players.length)  {
-      const player = this.players[i];
+
+    this.iteration = 0;
+
+    while (this.iteration < this.players.length)  {
+      const player = this.players[this.iteration];
 
       if (player.isFolded()) { continue; }
       if (this.most_recent_better === player || this.roundOver() ) { break; }
 
       this.displayStatus(player, this.high_bet);
       this.resetButtons(player);
-      this.setButtons(player); //raises is set to true for bets
 
-
-      i++;
-
+      const i = this.iteration;
+      while ( (this.iteration - 1) !== i ) {
+        this.setButtons(player);
+        // debugger
+      }
+      debugger
     }
 
    }
@@ -180,13 +169,16 @@ class Game {
 
   sendCall(player) {
     this.addToPot(player.takeBet(this.high_bet));
+    this.iteration += 1;
   }
 
   sendFold(player) {
     player.fold();
+    this.iteration += 1;
   }
 
   sendBet(player) {
+
     // console.log("not enough money") if player.bankroll < high_bet;
     this.raises = true;
     this.most_recent_better = player;
@@ -195,10 +187,26 @@ class Game {
     const takeBet = player.takeBet(bet);
     this.high_bet = bet;
     this.addToPot(takeBet);
+    this.iteration += 1;
   }
 
 
+  
+    endRound() {
+      const dealerMessage = document.getElementById('dealer-message-box');
+      var li = document.createElement('li');
 
+      const winningHand = this.winner().hand;
+      // const winningHand ='hello from endround';
+      this.showHands();
+
+      li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
+
+      dealerMessage.appendChild(li);
+      this.winner().receiveWinnings(this.pot);
+      this.pot = 0;
+      this.returnCards();
+    }
 
 
 
