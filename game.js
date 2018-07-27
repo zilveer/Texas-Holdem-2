@@ -63,7 +63,6 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.dealIn(this.deck.dealHand());
-        player.renderMoney();
         player.hand.pile = pile.pile;
       }
 
@@ -75,7 +74,6 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.hand.pile = pile.pile;
-        player.renderMoney();
       }
       pile.render();
 
@@ -87,9 +85,9 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.hand.pile = pile.pile;
-        player.renderMoney();
       }
       pile.render();
+
 
       // this.take_bets();
 
@@ -123,25 +121,51 @@ class Game {
    let noRaises = true;
    while (noRaises) {
     noRaises = false;
+
     for (var i = 0; i < this.players.length; i++) {
       const player = this.players[i];
       if (player.isFolded) { continue; }
       if (most_recent_better === player || this.roundOver() ) { break; }
-      
-      var foldButton = document.createElement('button');
-      var callButton = document.createElement('button');
-      var betButton = document.createElement('button');
 
-      foldButton.id = `${this.name}fold`;
-      callButton.id = `${this.name}call`;
-      betButton.id = `${this.name}bet`;
+      this.displayStatus(player, high_bet);
+      // const dealerMessage = document.getElementById('dealer-message-box');
+      // dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
+      //
+      // this.players.forEach ( player => {
+      //   player.renderMoney();
+      // });
 
-      foldButton.style.visibility = 'hidden';
-      callButton.style.visibility = 'hidden';
-      betButton.style.visibility = 'hidden';
-
-
-
+      // var foldButton =
+      document.getElementById(`${player.name}fold`).style.visibility = 'display';
+      // var callButton =
+      document.getElementById(`${player.name}call`).style.visibility = 'display';
+      // var betButton =
+      document.getElementById(`${player.name}bet`).style.visibility = 'display';
+      //         begin
+      //           response = player.respond_bet
+      //           case response
+      //           when :call
+      //             add_to_pot(player.take_bet(high_bet))
+      //           when :bet
+      //             raise "not enough money" unless player.bankroll >= high_bet
+      //             no_raises = false
+      //             most_recent_better = player
+      //             bet = player.get_bet
+      //             raise "bet must be at least $#{high_bet}" unless bet >= high_bet
+      //             rs = player.take_bet(bet)
+      //             high_bet = bet
+      //             add_to_pot(rs)
+      //           when :fold
+      //             player.fold
+      //           end
+      //         rescue => error
+      //           puts "#{error.message}"
+      //           retry
+      //         end
+      //
+      //       end
+      //     end
+      //   end
 
 
 
@@ -165,6 +189,15 @@ class Game {
       li.innerHTML = `${player.name}: ${player.hand.rank()}`;
       dealerMessage.appendChild(li);
     }
+  }
+
+  displayStatus(player, high_bet) {
+    const dealerMessage = document.getElementById('dealer-message-box');
+    dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
+
+    this.players.forEach ( player => {
+      player.renderMoney();
+    });
   }
 
   roundOver() {
@@ -196,32 +229,6 @@ class Game {
 
 }
 
-//
-//   def display_status(index, high_bet)
-//     puts
-//     puts "Pot: $#{@pot}"
-//     puts "High bet: $#{high_bet}"
-//
-//     players.each_with_index do |player, i|
-//       puts "Player #{i + 1} has #{player.bankroll}"
-//     end
-//
-//     puts
-//     puts "Current player: #{index + 1}"
-//     puts "Player #{index + 1} has bet: $#{players[index].current_bet}"
-//     puts "The bet is at $#{high_bet}"
-//     puts "Player #{index + 1}'s hand: #{players[index].hand}"
-//   end
-//
-//   def end_round
-//     show_hands
-//     puts
-//     puts "WINNER"
-//     puts "#{winner.hand} wins $#{pot} with a #{winner.hand.rank}"
-//     winner.receive_winnings(pot)
-//     @pot = 0
-//     return_cards
-//   end
 //
 //   def end_game
 //     puts "The game is over"

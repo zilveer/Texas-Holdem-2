@@ -23,7 +23,14 @@ class Player {
       innerHand.appendChild(card.image);
     });
     this.renderButtons();
+    this.renderMoneyBox();
+  }
 
+  renderMoneyBox() {
+    var innerHand = document.getElementById(`${this.name}`);
+    var moneyDiv = document.createElement('div');
+    moneyDiv.id = `${this.name}-moneybox`;
+    innerHand.appendChild(moneyDiv);
   }
 
   renderButtons() {
@@ -46,44 +53,38 @@ class Player {
     callButton.id = `${this.name}call`;
     betButton.id = `${this.name}bet`;
 
-
     foldButton.addEventListener('click', this.sendFold);
     callButton.addEventListener('click', this.sendCall);
     betButton.addEventListener('click', this.sendBet);
 
-    // foldButton.style.visibility = 'hidden';
-    // callButton.style.visibility = 'hidden';
-    // betButton.style.visibility = 'hidden';
+    foldButton.style.visibility = 'hidden';
+    callButton.style.visibility = 'hidden';
+    betButton.style.visibility = 'hidden';
 
     var handAction = document.getElementById(`${this.name}-action`);
 
     handAction.appendChild(foldButton);
     handAction.appendChild(callButton);
     handAction.appendChild(betButton);
-
-
   }
 
   sendFold() {
-    debugger
     return 'fold';
   }
   sendCall() {
-    debugger
     return 'call';
   }
   sendBet() {
     return 'bet';
   }
 
-
-
   renderMoney() {
-    var hand = document.getElementById(`${this.name}`);
+    var moneybox = document.getElementById(`${this.name}-moneybox`);
+    moneybox.innerHTML = '';
     var money = document.createElement('p');
-    money.id = this.name;
-    money.innerHTML = `Bankroll: ${this.bankroll} Current Bet: ${this.currentBet}`;
-    hand.appendChild(money);
+    money.id = `${this.name}-money`;
+    money.innerHTML = `Bankroll: ${this.bankroll}`;
+    moneybox.appendChild(money);
   }
 
   isEqual(otherPlayer) {
@@ -133,22 +134,6 @@ class Player {
 
 
   }
-
-  // def respond_bet
-  //   print "(c)all, (b)et, or (f)old? > "
-  //   response = gets.chomp.downcase[0]
-  //   case response
-  //   when 'c' then :call
-  //   when 'b' then :bet
-  //   when 'f' then :fold
-  //   else
-  //     puts 'must be (c)all, (b)et, or (f)old'
-  //     respond_bet
-  //   end
-  // end
-  //
-
-
 
 }
 
