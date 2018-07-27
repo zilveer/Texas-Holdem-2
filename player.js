@@ -129,17 +129,12 @@ class Player {
     return amount;
   }
 
-  respondBet() {
-
-
-
+  getBet() {
+    //     console.log( "Bet (bankroll: $#{bankroll}) > ")
+    //     bet = gets.chomp.to_i
+    //     raise 'not enough money' unless bet <= bankroll
+    //     bet
+    return 1000;
   }
 
 }
-
-//   get_bet {
-//     console.log( "Bet (bankroll: $#{bankroll}) > ")
-//     bet = gets.chomp.to_i
-//     raise 'not enough money' unless bet <= bankroll
-//     bet
-//   end
