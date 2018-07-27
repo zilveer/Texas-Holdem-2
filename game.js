@@ -5,10 +5,14 @@ class Game {
     this.players = players;
     this.pot = 0;
     this.deck = new Deck();
+    this.pile = this.deck.dealPile();
+
+    this.queue = [];
 
     this.high_bet = 0;
     this.most_recent_better = null;
     this.raises = true;
+    this.setup();
   }
 
   resetPlayers() {
@@ -51,90 +55,125 @@ class Game {
     return strongPlayer;
   }
 
-  play() {
-    while (!gameOver) {
-      this.playRound();
+  // play() {
+  //   while (!gameOver) {
+  //     this.playRound();
+  //   }
+  // }
+
+  setup() {
+
+    this.high_bet = 0;
+    this.most_recent_better = null;
+    this.raises = true;
+
+    this.deck = shuffle(this.deck);
+    this.resetPlayers();
+    // const pile = this.deck.dealPile(); //3 cards
+
+    for (let i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      if (player.bankroll <= 0) { continue; }
+      player.dealIn(this.deck.dealHand());
+      player.hand.pile = pile.pile;
     }
-  }
-
-  playRound() {
-    // while (!this.roundOver()) {
-      this.deck = shuffle(this.deck);
-      this.resetPlayers();
-      const pile = this.deck.dealPile(); //3 cards
-
-      for (let i = 0; i < this.players.length; i++) {
-        const player = this.players[i];
-        if (player.bankroll <= 0) { continue; }
-        player.dealIn(this.deck.dealHand());
-        player.hand.pile = pile.pile;
-      }
-
-      this.takeBets();
-
-      pile.pile.push(this.deck.take(1)[0]); //4 cards
-      for (let i = 0; i < this.players.length; i++) {
-        const player = this.players[i];
-        if (player.bankroll <= 0) { continue; }
-        player.hand.pile = pile.pile;
-      }
-      pile.render();
-
-
-      this.takeBets();
-
-      pile.pile.push(this.deck.take(1)[0]); //5 cards
-      for (let i = 0; i < this.players.length; i++) {
-        const player = this.players[i];
-        if (player.bankroll <= 0) { continue; }
-        player.hand.pile = pile.pile;
-      }
-      pile.render();
-
-
-      this.takeBets();
-
-    this.endRound();
-  }
-
-  // //
-  takeBets() {
 
     for (var j = 0; j < this.players.length; j++) {
       const player = this.players[j];
       player.resetCurrentBet();
     }
 
-   this.high_bet = 0;
-   this.most_recent_better = null;
-   this.raises = true;
+    this.queue = this.players;
+    this.takeBets(this.queue[0]);
+  }
 
-   while (this.raises) {
+  playRound() {
+    // while (!this.roundOver()) {
+      // this.deck = shuffle(this.deck);
+      // this.resetPlayers();
+      // const pile = this.deck.dealPile(); //3 cards
+      //
+      // for (let i = 0; i < this.players.length; i++) {
+      //   const player = this.players[i];
+      //   if (player.bankroll <= 0) { continue; }
+      //   player.dealIn(this.deck.dealHand());
+      //   player.hand.pile = pile.pile;
+      // }
+      //
+      // this.takeBets();
+      this.high_bet = 0;
+      this.most_recent_better = null;
+      this.raises = true;
 
-    this.raises = false;
-
-    // for (var i = 0; i < this.players.length; i++) {
-
-    this.iteration = 0;
-
-    while (this.iteration < this.players.length)  {
-      const player = this.players[this.iteration];
-
-      if (player.isFolded()) { continue; }
-      if (this.most_recent_better === player || this.roundOver() ) { break; }
-
-      this.displayStatus(player, this.high_bet);
-      this.resetButtons(player);
-
-      const i = this.iteration;
-      while ( (this.iteration - 1) !== i ) {
-        this.setButtons(player);
-        // debugger
+      this.pile.pile.push(this.deck.take(1)[0]); //4 cards
+      // debugger
+      for (let i = 0; i < this.players.length; i++) {
+        const player = this.players[i];
+        if (player.bankroll <= 0) { continue; }
+        player.hand.pile = this.pile.pile;
       }
-      debugger
-    }
 
+      for (var j = 0; j < this.players.length; j++) {
+        const player = this.players[j];
+        player.resetCurrentBet();
+      }
+
+      this.pile.render();
+
+      this.takeBets(this.queue[0]);
+
+    //   pile.pile.push(this.deck.take(1)[0]); //5 cards
+    //   for (let i = 0; i < this.players.length; i++) {
+    //     const player = this.players[i];
+    //     if (player.bankroll <= 0) { continue; }
+    //     player.hand.pile = pile.pile;
+    //   }
+    //   pile.render();
+    //
+    //
+    //   this.takeBets();
+    //
+    // this.endRound();
+  }
+
+  takeBets(player) {
+
+   if (player.isFolded()) {
+     this.queue.shift();
+     return this.takeBets(this.queue[0]);
    }
+
+  this.displayStatus(player);
+  this.resetButtons(player);
+  this.setButtons(player);
+
+
+   // while (this.raises) {
+   //
+   //  this.raises = false;
+   //
+   //  // for (var i = 0; i < this.players.length; i++) {
+   //
+   //  this.iteration = 0;
+   //
+   //  while (this.iteration < this.players.length)  {
+   //    const player = this.players[this.iteration];
+   //
+   //    if (player.isFolded()) { continue; }
+   //    if (this.most_recent_better === player || this.roundOver() ) { break; }
+   //
+   //    this.displayStatus(player, this.high_bet);
+   //    this.resetButtons(player);
+   //
+   //    const i = this.iteration;
+   //    while ( (this.iteration - 1) !== i ) {
+   //      this.setButtons(player);
+   //      // debugger
+   //    }
+   //
+   //  }
+   //
+   // }
   }
 
   setButtons(player) {
@@ -169,15 +208,35 @@ class Game {
 
   sendCall(player) {
     this.addToPot(player.takeBet(this.high_bet));
-    this.iteration += 1;
+
+
+    if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 0 ) {
+      return this.playRound();
+    } else {
+      this.queue.shift();
+      this.queue.push(player);
+      this.takeBets(this.queue[0]);
+    }
+
   }
 
   sendFold(player) {
     player.fold();
-    this.iteration += 1;
+
+    if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 0 ) {
+      return this.playRound();
+    } else {
+      this.queue.shift();
+      this.takeBets(this.queue[0]);
+    }
+
   }
 
   sendBet(player) {
+
+    if ( this.most_recent_better === player ) {
+      return this.playRound();
+    }
 
     // console.log("not enough money") if player.bankroll < high_bet;
     this.raises = true;
@@ -187,26 +246,35 @@ class Game {
     const takeBet = player.takeBet(bet);
     this.high_bet = bet;
     this.addToPot(takeBet);
-    this.iteration += 1;
+
+    if ( this.roundOver() || this.queue.length === 0 ) {
+      return this.playRound();
+    } else {
+      this.queue.shift();
+      this.queue.push(player);
+      this.takeBets(this.queue[0]);
+    }
+
   }
 
 
-  
-    endRound() {
-      const dealerMessage = document.getElementById('dealer-message-box');
-      var li = document.createElement('li');
 
-      const winningHand = this.winner().hand;
-      // const winningHand ='hello from endround';
-      this.showHands();
+  endRound() {
+    const dealerMessage = document.getElementById('dealer-message-box');
+    var li = document.createElement('li');
 
-      li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
+    const winningHand = this.winner().hand;
+    // const winningHand ='hello from endround';
+    this.showHands();
 
-      dealerMessage.appendChild(li);
-      this.winner().receiveWinnings(this.pot);
-      this.pot = 0;
-      this.returnCards();
-    }
+    li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
+
+    dealerMessage.appendChild(li);
+    this.winner().receiveWinnings(this.pot);
+    this.pot = 0;
+    this.returnCards();
+    this.setup();
+  }
 
 
 
@@ -224,9 +292,9 @@ class Game {
     }
   }
 
-  displayStatus(player, high_bet) {
+  displayStatus(player) {
     const dealerMessage = document.getElementById('dealer-message-box');
-    dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
+    dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${this.high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
 
     this.players.forEach ( player => {
       player.renderMoney();
