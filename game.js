@@ -72,7 +72,7 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.dealIn(this.deck.dealHand());
-
+        player.renderMoney();
         player.hand.pile = pile.pile;
       }
 
@@ -84,6 +84,7 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.hand.pile = pile.pile;
+        player.renderMoney();
       }
       pile.render();
 
@@ -95,6 +96,7 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.hand.pile = pile.pile;
+        player.renderMoney();
       }
       pile.render();
 

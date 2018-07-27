@@ -17,15 +17,19 @@ class Player {
     var ul = document.createElement('ul');
     ul.id = this.name;
     hands.appendChild(ul);
-
     hand.hand.forEach ( card => {
       var hand = document.getElementById(`${this.name}`);
       hand.appendChild(card.image);
     });
   }
 
-
-
+  renderMoney() {
+    var hand = document.getElementById(`${this.name}`);
+    var money = document.createElement('p');
+    money.id = this.name;
+    money.innerHTML = `Bankroll: ${this.bankroll} Current Bet: ${this.currentBet}`;
+    hand.appendChild(money);
+  }
 
   isEqual(otherPlayer) {
     return this.hand.isEqual(otherPlayer.hand);

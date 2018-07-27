@@ -108,11 +108,6 @@ class PokerHand extends WinningHands {
   }
 
   isRoyal() {
-
-    if (this.hand === undefined ) {
-      debugger
-    }
-
     const royals = this.handPile()[0].royals();
     const hand = this.handPile().map(
       card => ( card.value ));
