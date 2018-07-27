@@ -15,31 +15,22 @@ class Game {
   }
 
   winner() {
-
     let strongestPlayer = null;
     for (var i = 0; i < this.players.length-1; i++) {
       for (var j = 1; j < this.players.length; j++) {
-
-
         const player = this.players[i];
         const otherPlayer = this.players[j];
-
         let strongPlayer = null;
-
         strongPlayer = this.comparator(player, otherPlayer);
         if ( strongestPlayer === null ) { strongestPlayer = strongPlayer; }
         strongestPlayer = this.comparator(strongPlayer, strongestPlayer);
-
       }
-
     }
-
     return strongestPlayer;
   }
 
   comparator(player, otherPlayer) {
     let strongPlayer;
-
     if (player.isEqual(otherPlayer)) {
       if (player.hand.tieBreaker(otherPlayer.hand)) {
         strongPlayer = player;

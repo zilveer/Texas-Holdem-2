@@ -2,8 +2,6 @@ class PokerHand extends WinningHands {
 
   card_value_count(value) {
     let sum= 0;
-
-
     this.handPile().forEach ( card => {
       if ( card.value === value ) {
         sum += 1;
@@ -13,7 +11,6 @@ class PokerHand extends WinningHands {
   }
 
   handTypes() {
-
     return [
       'RoyalFlush',
       'StraightFlush',
@@ -29,29 +26,23 @@ class PokerHand extends WinningHands {
   }
 
   set_card(n) {
-
     return this.handPile().find ( card => ( this.card_value_count(card.value) == n ));
   }
 
   rank() {
     for (var i = 0; i < this.handTypes().length; i++) {
-
      const handType = this.handTypes()[i];
-
      if (this[`is${handType}`]()) {
        return handType;
      }
     }
-
   }
 
   isEqual(otherPokerHand) {
-
     return this.rank() === otherPokerHand.rank();
   }
 
   isGreaterThan(otherPokerHand) {
-
     return this.handTypes().indexOf(this.rank()) < this.handTypes().indexOf(otherPokerHand.rank());
   }
 
@@ -101,7 +92,6 @@ class PokerHand extends WinningHands {
   }
 
   isThreeKind() {
-
     for (var i = 0; i < this.handPile().length; i++) {
       if ( this.card_value_count(this.handPile()[i].value) === 3 ) {
         return true;
@@ -131,7 +121,6 @@ class PokerHand extends WinningHands {
   }
 
   isFourKind() {
-
     for (var i = 0; i < this.handPile().length; i++) {
       if ( this.card_value_count(this.handPile()[i].value) === 4 ) {
         return true;
@@ -145,11 +134,9 @@ class PokerHand extends WinningHands {
   }
 
   isStraightFlush() {
-
     if ( !this.isStraight() ) {
       return null;
     }
-
     const comparator = new Hand(this.isStraightHelper(), []);
     return comparator.isStraight() && comparator.isFlush();
   }
@@ -158,9 +145,7 @@ class PokerHand extends WinningHands {
     if ( !this.isStraight() ) {
       return null;
     }
-
     const comparator = new Hand(this.isStraightHelper(), []);
-
     return comparator.isRoyal() && comparator.isStraightFlush();
   }
 
@@ -169,8 +154,6 @@ class PokerHand extends WinningHands {
   }
 
   isStraightHelper() {
-
-
     let straight;
     const values = this.hand[0].values();
     const hand = unique( sort(this.handPile()).reverse().map(
