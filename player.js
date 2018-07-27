@@ -17,11 +17,66 @@ class Player {
     var ul = document.createElement('ul');
     ul.id = this.name;
     hands.appendChild(ul);
+    var innerHand = document.getElementById(`${this.name}`);
+
     hand.hand.forEach ( card => {
-      var hand = document.getElementById(`${this.name}`);
-      hand.appendChild(card.image);
+      innerHand.appendChild(card.image);
     });
+    this.renderButtons();
+
   }
+
+  renderButtons() {
+    var innerHand = document.getElementById(`${this.name}`);
+
+    var actionDiv = document.createElement('div');
+    actionDiv.id = `${this.name}-action`;
+
+    innerHand.appendChild(actionDiv);
+
+    var foldButton = document.createElement('button');
+    var callButton = document.createElement('button');
+    var betButton = document.createElement('button');
+
+    foldButton.innerHTML = 'Fold';
+    callButton.innerHTML = 'Call';
+    betButton.innerHTML = 'Bet';
+
+    foldButton.id = `${this.name}fold`;
+    callButton.id = `${this.name}call`;
+    betButton.id = `${this.name}bet`;
+
+
+    foldButton.addEventListener('click', this.sendFold);
+    callButton.addEventListener('click', this.sendCall);
+    betButton.addEventListener('click', this.sendBet);
+
+    // foldButton.style.visibility = 'hidden';
+    // callButton.style.visibility = 'hidden';
+    // betButton.style.visibility = 'hidden';
+
+    var handAction = document.getElementById(`${this.name}-action`);
+
+    handAction.appendChild(foldButton);
+    handAction.appendChild(callButton);
+    handAction.appendChild(betButton);
+
+
+  }
+
+  sendFold() {
+    debugger
+    return 'fold';
+  }
+  sendCall() {
+    debugger
+    return 'call';
+  }
+  sendBet() {
+    return 'bet';
+  }
+
+
 
   renderMoney() {
     var hand = document.getElementById(`${this.name}`);
@@ -75,20 +130,23 @@ class Player {
 
   respondBet() {
 
+
+
   }
 
-  //   respond_bet {
-  //     console.log( "(c)all, (b)et, or (f)old? > ")
-  //     response = gets.chomp.downcase[0]
-  //     case response
-  //     when 'c' then :call
-  //     when 'b' then :bet
-  //     when 'f' then :fold
-  //     else
-  //       puts 'must be (c)all, (b)et, or (f)old'
-  //       respond_bet
-  //     end
+  // def respond_bet
+  //   print "(c)all, (b)et, or (f)old? > "
+  //   response = gets.chomp.downcase[0]
+  //   case response
+  //   when 'c' then :call
+  //   when 'b' then :bet
+  //   when 'f' then :fold
+  //   else
+  //     puts 'must be (c)all, (b)et, or (f)old'
+  //     respond_bet
   //   end
+  // end
+  //
 
 
 

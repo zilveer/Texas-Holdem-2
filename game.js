@@ -111,30 +111,47 @@ class Game {
     this.pot = 0;
     this.returnCards();
   }
+  // //
+  takeBets() {
+    this.players.forEach( player => (
+      player.resetCurrentBet()
+    ));
 
-  // takeBets() {
-  //   this.players.forEach( player => (
-  //     player.resetCurrentBet()
-  //   ));
-  //
-  //  let high_bet = 0;
-  //  let most_recent_better = null;
-  //
-  //  let noRaises = true;
-  //  while (noRaises) {
-  //   noRaises = false;
-  //   for (var i = 0; i < this.players.length; i++) {
-  //     const player = this.players[i];
-  //     if (player.isFolded) { continue; }
-  //     if (most_recent_better === player || this.roundOver() ) {
-  //       break;
-  //     }
-  //     //display status of bet
-  //   }
-  //
-  //  }
-  //
-  // }
+   let high_bet = 0;
+   let most_recent_better = null;
+
+   let noRaises = true;
+   while (noRaises) {
+    noRaises = false;
+    for (var i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      if (player.isFolded) { continue; }
+      if (most_recent_better === player || this.roundOver() ) { break; }
+      
+      var foldButton = document.createElement('button');
+      var callButton = document.createElement('button');
+      var betButton = document.createElement('button');
+
+      foldButton.id = `${this.name}fold`;
+      callButton.id = `${this.name}call`;
+      betButton.id = `${this.name}bet`;
+
+      foldButton.style.visibility = 'hidden';
+      callButton.style.visibility = 'hidden';
+      betButton.style.visibility = 'hidden';
+
+
+
+
+
+
+
+
+    }
+
+   }
+
+  }
 
   showHands() {
     const dealerMessage = document.getElementById('dealer-message-box');
