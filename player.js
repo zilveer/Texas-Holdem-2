@@ -6,13 +6,26 @@ class Player {
     this.currentBet = 0;
   }
 
-  // render() {
-  //
-  // }
 
   dealIn(hand) {
     this.hand = hand;
+    this.render(this.hand);
   }
+
+  render(hand) {
+    const hands = document.getElementById('hands');
+    var ul = document.createElement('ul');
+    ul.id = this.name;
+    hands.appendChild(ul);
+
+    hand.hand.forEach ( card => {
+      var hand = document.getElementById(`${this.name}`);
+      hand.appendChild(card.image);
+    });
+  }
+
+
+
 
   isEqual(otherPlayer) {
     return this.hand.isEqual(otherPlayer.hand);
@@ -44,7 +57,7 @@ class Player {
 
   returnCards() {
     const cards = this.hand;
-    this.hand = null;
+    this.hand = [];
     return cards;
   }
 
@@ -77,32 +90,6 @@ class Player {
 
 }
 
-
-
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //   get_bet {
 //     console.log( "Bet (bankroll: $#{bankroll}) > ")
 //     bet = gets.chomp.to_i

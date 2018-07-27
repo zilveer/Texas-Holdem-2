@@ -15,13 +15,15 @@ class Game {
   }
 
   winner() {
-    // return Math.max.apply(Math, this.players.map( player => { return player.bankroll; }));
+
     let strongestPlayer = null;
     for (var i = 0; i < this.players.length-1; i++) {
       for (var j = 1; j < this.players.length; j++) {
 
+
         const player = this.players[i];
         const otherPlayer = this.players[j];
+
         let strongPlayer = null;
 
         strongPlayer = this.comparator(player, otherPlayer);
@@ -70,6 +72,7 @@ class Game {
         const player = this.players[i];
         if (player.bankroll <= 0) { continue; }
         player.dealIn(this.deck.dealHand());
+
         player.hand.pile = pile.pile;
       }
 
@@ -97,16 +100,13 @@ class Game {
 
       // this.take_bets();
 
-    // }
-    // this.players[1].hand.rank();
-    // this.winner();
-
     this.endRound();
   }
 
   endRound() {
     const dealerMessage = document.getElementById('dealer-message-box');
     var li = document.createElement('li');
+
     const winningHand = this.winner().hand;
     // const winningHand ='hello from endround';
     this.showHands();
@@ -119,29 +119,29 @@ class Game {
     this.returnCards();
   }
 
-  takeBets() {
-    this.players.forEach( player => (
-      player.resetCurrentBet()
-    ));
-
-   let high_bet = 0;
-   let most_recent_better = null;
-
-   let noRaises = true;
-   while (noRaises) {
-    noRaises = false;
-    for (var i = 0; i < this.players.length; i++) {
-      const player = this.players[i];
-      if (player.isFolded) { continue; }
-      if (most_recent_better === player || this.roundOver() ) {
-        break;
-      }
-      //display status of bet
-    }
-
-   }
-
-  }
+  // takeBets() {
+  //   this.players.forEach( player => (
+  //     player.resetCurrentBet()
+  //   ));
+  //
+  //  let high_bet = 0;
+  //  let most_recent_better = null;
+  //
+  //  let noRaises = true;
+  //  while (noRaises) {
+  //   noRaises = false;
+  //   for (var i = 0; i < this.players.length; i++) {
+  //     const player = this.players[i];
+  //     if (player.isFolded) { continue; }
+  //     if (most_recent_better === player || this.roundOver() ) {
+  //       break;
+  //     }
+  //     //display status of bet
+  //   }
+  //
+  //  }
+  //
+  // }
 
   showHands() {
     const dealerMessage = document.getElementById('dealer-message-box');

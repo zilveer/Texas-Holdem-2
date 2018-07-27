@@ -2,6 +2,8 @@ class PokerHand extends WinningHands {
 
   card_value_count(value) {
     let sum= 0;
+
+
     this.handPile().forEach ( card => {
       if ( card.value === value ) {
         sum += 1;
@@ -11,6 +13,7 @@ class PokerHand extends WinningHands {
   }
 
   handTypes() {
+
     return [
       'RoyalFlush',
       'StraightFlush',
@@ -26,6 +29,7 @@ class PokerHand extends WinningHands {
   }
 
   set_card(n) {
+
     return this.handPile().find ( card => ( this.card_value_count(card.value) == n ));
   }
 
@@ -38,6 +42,7 @@ class PokerHand extends WinningHands {
     //    return handType;
     //  }
     // }
+
     if (this.isRoyalFlush()) {
       return 'RoyalFlush';
     } else if (this.isStraightFlush()) {
@@ -64,10 +69,12 @@ class PokerHand extends WinningHands {
   }
 
   isEqual(otherPokerHand) {
+
     return this.rank() === otherPokerHand.rank();
   }
 
   isGreaterThan(otherPokerHand) {
+
     return this.handTypes().indexOf(this.rank()) < this.handTypes().indexOf(otherPokerHand.rank());
   }
 
@@ -101,6 +108,11 @@ class PokerHand extends WinningHands {
   }
 
   isRoyal() {
+
+    if (this.hand === undefined ) {
+      debugger
+    }
+
     const royals = this.handPile()[0].royals();
     const hand = this.handPile().map(
       card => ( card.value ));
@@ -117,6 +129,7 @@ class PokerHand extends WinningHands {
   }
 
   isThreeKind() {
+
     for (var i = 0; i < this.handPile().length; i++) {
       if ( this.card_value_count(this.handPile()[i].value) === 3 ) {
         return true;
@@ -126,6 +139,7 @@ class PokerHand extends WinningHands {
   }
 
   isFlush() {
+
     const suits = {
       clubs: 0,
       spades: 0,
@@ -145,6 +159,7 @@ class PokerHand extends WinningHands {
   }
 
   isFourKind() {
+
     for (var i = 0; i < this.handPile().length; i++) {
       if ( this.card_value_count(this.handPile()[i].value) === 4 ) {
         return true;
@@ -158,11 +173,12 @@ class PokerHand extends WinningHands {
   }
 
   isStraightFlush() {
+
     if ( !this.isStraight() ) {
       return null;
     }
 
-    const comparator = new PokerHand(this.isStraightHelper(), []);
+    const comparator = new Hand(this.isStraightHelper(), []);
     return comparator.isStraight() && comparator.isFlush();
   }
 
@@ -171,7 +187,8 @@ class PokerHand extends WinningHands {
       return null;
     }
 
-    const comparator = new PokerHand(this.isStraightHelper(), []);
+    const comparator = new Hand(this.isStraightHelper(), []);
+
     return comparator.isRoyal() && comparator.isStraightFlush();
   }
 
@@ -180,6 +197,8 @@ class PokerHand extends WinningHands {
   }
 
   isStraightHelper() {
+
+
     let straight;
     const values = this.hand[0].values();
     const hand = unique( sort(this.handPile()).reverse().map(

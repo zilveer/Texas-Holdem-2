@@ -39,9 +39,6 @@ class Deck {
   }
 
   take(n) {
-    if (n > this.count()) {
-      return null;
-    }
     const dealtCard = this.deck.splice(0,n);
     return dealtCard;
   }

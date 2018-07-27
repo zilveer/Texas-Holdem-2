@@ -1,1 +1,3 @@
 Calculate straights for a-2-3-4-5
+
+Resolve bug by placing === undefined debugger everywhere
