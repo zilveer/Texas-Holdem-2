@@ -111,7 +111,7 @@ class Game {
     // const winningHand ='hello from endround';
     this.showHands();
 
-    li.innerHTML = `WINNER - ${winningHand} wins $${this.pot} with a ${winningHand.rank()}`;
+    li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
 
     dealerMessage.appendChild(li);
     this.winner().receiveWinnings(this.pot);
@@ -150,7 +150,9 @@ class Game {
       const player = this.players[i];
       if (player.isFolded()) { continue; }
       var li = document.createElement('li');
-      li.innerHTML = `${player.hand} ${player.hand.rank()}`;
+      let string = "";
+      // player.hand.hand.forEach( card => { string += `${card.to_s()} `; });
+      li.innerHTML = `${player.name}: ${player.hand.rank()}`;
       dealerMessage.appendChild(li);
     }
   }
@@ -174,7 +176,7 @@ class Game {
   returnCards() {
     for (var i = 0; i < this.players.length; i++) {
       const player = this.players[i];
-      this.deck.returnCards(player.returnCards());
+      this.deck.returnCards(player.returnCards().hand);
     }
   }
 

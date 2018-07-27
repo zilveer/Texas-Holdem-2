@@ -47,7 +47,8 @@ class Deck {
   }
 
   returnCards(cards) {
-    this.deck.push(...cards);
+    // debugger
+    this.deck = this.deck.concat(cards);
   }
 
   count() {

@@ -58,6 +58,10 @@ class Card {
     }
   }
 
+  to_s() {
+    return `${this.value} of ${this.suit}`;
+  }
+
 }
 
 // export default Card;

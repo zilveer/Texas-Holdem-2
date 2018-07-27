@@ -1,11 +1,5 @@
 class PokerHand extends WinningHands {
 
-  // constructor(hand,pile) {
-  //   super(hand,pile);
-  //   this.hand = hand;
-  //   this.pile = pile;
-  // }
-
   card_value_count(value) {
     let sum= 0;
     this.handPile().forEach ( card => {
@@ -213,27 +207,3 @@ class PokerHand extends WinningHands {
   }
 
 }
-
-// if (this.isRoyalFlush()) {
-//   return 'royalFlush';
-// } else if (this.isStraightFlush()) {
-//   return 'straightFlush';
-// } else if (this.isFourKind()) {
-//   return 'fourKind';
-// } else if (this.isHouse()) {
-//   return 'house';
-// } else if (this.isFlush()) {
-//   return 'flush';
-// } else if (this.isStraight()) {
-//   return 'straight';
-// } else if (this.isThreeKind()) {
-//   return 'threeKind';
-// } else if (this.isTwoPair()) {
-//   return 'twoPair';
-// } else if (this.isPair()) {
-//   return 'onePair';
-// } else if (this.isTwoPair()) {
-//   return 'twoPair';
-// } else {
-//   return 'highCard';
-// }

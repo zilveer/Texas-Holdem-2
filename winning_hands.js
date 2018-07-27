@@ -1,7 +1,9 @@
 class WinningHands {
 
   handPile() {
-
+    if ( this.hand === undefined ) {
+      debugger;
+    }
     return sort(this.hand.concat(this.pile));
   }
 

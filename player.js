@@ -1,6 +1,7 @@
 class Player {
 
-  constructor(bankroll) {
+  constructor(name, bankroll) {
+    this.name = name;
     this.bankroll = bankroll;
     this.currentBet = 0;
   }
@@ -14,7 +15,6 @@ class Player {
   }
 
   isEqual(otherPlayer) {
-    // debugger
     return this.hand.isEqual(otherPlayer.hand);
   }
 

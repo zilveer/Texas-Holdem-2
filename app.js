@@ -16,18 +16,18 @@ function resetHandPile() {
 
 function newGame2() {
   resetHandPile();
-  const game = new Game ( [new Player(100000), new Player(100000)] );
+  const game = new Game ( [new Player('Player1', 100000), new Player('Player2', 100000)] );
   return game.playRound();
 }
 
 function newGame3() {
   resetHandPile();
-  const game = new Game ( [new Player(100000), new Player(100000), new Player(100000)] );
+  const game = new Game ( [new Player('Player1', 100000), new Player('Player2', 100000), new Player('Player3', 100000)] );
   return game.playRound();
 }
 
 function newGame4() {
   resetHandPile();
-  const game = new Game ( [new Player(100000), new Player(100000), new Player(100000), new Player(100000)] );
+  const game = new Game ( [new Player('Player1', 100000), new Player('Player2', 100000), new Player('Player3', 100000), new Player('Player4', 100000)] );
   return game.playRound();
 }
