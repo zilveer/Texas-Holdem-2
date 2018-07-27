@@ -34,38 +34,15 @@ class PokerHand extends WinningHands {
   }
 
   rank() {
-    // for (var i = 0; i < this.handTypes().length; i++) {
-    //
-    //  const handType = this.handTypes()[i];
-    //
-    //  if (this[`is${handType}`]()) {
-    //    return handType;
-    //  }
-    // }
+    for (var i = 0; i < this.handTypes().length; i++) {
 
-    if (this.isRoyalFlush()) {
-      return 'RoyalFlush';
-    } else if (this.isStraightFlush()) {
-      return 'StraightFlush';
-    } else if (this.isFourKind()) {
-      return 'FourKind';
-    } else if (this.isHouse()) {
-      return 'House';
-    } else if (this.isFlush()) {
-      return 'Flush';
-    } else if (this.isStraight()) {
-      return 'Straight';
-    } else if (this.isThreeKind()) {
-      return 'ThreeKind';
-    } else if (this.isTwoPair()) {
-      return 'TwoPair';
-    } else if (this.isPair()) {
-      return 'OnePair';
-    } else if (this.isTwoPair()) {
-      return 'TwoPair';
-    } else {
-      return 'HighCard';
+     const handType = this.handTypes()[i];
+
+     if (this[`is${handType}`]()) {
+       return handType;
+     }
     }
+
   }
 
   isEqual(otherPokerHand) {
@@ -115,7 +92,7 @@ class PokerHand extends WinningHands {
     return royals.every( royalValue => (hand.includes(royalValue)) );
   }
 
-  isPair() {
+  isOnePair() {
     return this.pairs().length === 1;
   }
 
@@ -164,7 +141,7 @@ class PokerHand extends WinningHands {
   }
 
   isHouse() {
-    return this.isThreeKind() && this.isPair();
+    return this.isThreeKind() && this.isOnePair();
   }
 
   isStraightFlush() {
