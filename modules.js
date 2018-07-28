@@ -39,3 +39,16 @@ function sort ( cards ) {
   }
   return cards;
 }
+
+function getType(el) {
+  return Object.prototype.toString.call(el).slice(8, -1);
+}
+
+function deepDup(arr) {
+  if (getType(arr) !== 'Array') {
+    return arr;
+  }
+  return arr.map((el) => {
+    return deepDup(el);
+  });
+}

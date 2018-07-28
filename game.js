@@ -5,7 +5,7 @@ class Game {
     this.players = players;
     this.pot = 0;
     this.deck = new Deck();
-    this.pile = this.deck.dealPile();
+    // this.pile = this.deck.dealPile();
 
     this.queue = [];
 
@@ -23,6 +23,11 @@ class Game {
   }
 
   winner() {
+
+    if ( this.queue.length === 1 ) {
+      return this.queue[0];
+    }
+
     let strongestPlayer = null;
     for (var i = 0; i < this.players.length-1; i++) {
       for (var j = 1; j < this.players.length; j++) {
@@ -68,14 +73,17 @@ class Game {
     this.raises = true;
 
     this.deck = shuffle(this.deck);
+    this.pile = this.deck.dealPile();
     this.resetPlayers();
+    this.queue = deepDup(this.players);
     // const pile = this.deck.dealPile(); //3 cards
 
     for (let i = 0; i < this.players.length; i++) {
       const player = this.players[i];
       if (player.bankroll <= 0) { continue; }
       player.dealIn(this.deck.dealHand());
-      player.hand.pile = pile.pile;
+      player.hand.pile = this.pile.pile;
+
     }
 
     for (var j = 0; j < this.players.length; j++) {
@@ -83,7 +91,7 @@ class Game {
       player.resetCurrentBet();
     }
 
-    this.queue = this.players;
+    // this.queue = this.players;
     this.takeBets(this.queue[0]);
   }
 
@@ -101,26 +109,36 @@ class Game {
       // }
       //
       // this.takeBets();
-      this.high_bet = 0;
-      this.most_recent_better = null;
-      this.raises = true;
+        if (this.roundOver()) {
 
-      this.pile.pile.push(this.deck.take(1)[0]); //4 cards
-      // debugger
-      for (let i = 0; i < this.players.length; i++) {
-        const player = this.players[i];
-        if (player.bankroll <= 0) { continue; }
-        player.hand.pile = this.pile.pile;
-      }
+          this.endRound();
+          return;
+        }
 
-      for (var j = 0; j < this.players.length; j++) {
-        const player = this.players[j];
-        player.resetCurrentBet();
-      }
 
-      this.pile.render();
+        this.high_bet = 0;
+        this.most_recent_better = null;
+        this.raises = true;
 
-      this.takeBets(this.queue[0]);
+        this.pile.pile.push(this.deck.take(1)[0]); //4 cards
+        //
+        for (let i = 0; i < this.players.length; i++) {
+          const player = this.players[i];
+          if (player.bankroll <= 0) { continue; }
+          player.hand.pile = this.pile.pile;
+          // this.resetButtons(player);
+        }
+
+        for (var j = 0; j < this.players.length; j++) {
+          const player = this.players[j];
+          player.resetCurrentBet();
+        }
+
+        this.pile.render();
+
+        this.takeBets(this.queue[0]);
+
+
 
     //   pile.pile.push(this.deck.take(1)[0]); //5 cards
     //   for (let i = 0; i < this.players.length; i++) {
@@ -144,7 +162,7 @@ class Game {
    }
 
   this.displayStatus(player);
-  this.resetButtons(player);
+  // this.resetButtons(player);
   this.setButtons(player);
 
 
@@ -168,7 +186,7 @@ class Game {
    //    const i = this.iteration;
    //    while ( (this.iteration - 1) !== i ) {
    //      this.setButtons(player);
-   //      // debugger
+   //      //
    //    }
    //
    //  }
@@ -208,9 +226,10 @@ class Game {
 
   sendCall(player) {
     this.addToPot(player.takeBet(this.high_bet));
-
+    this.resetButtons(player);
 
     if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 0 ) {
+
       return this.playRound();
     } else {
       this.queue.shift();
@@ -218,21 +237,27 @@ class Game {
       this.takeBets(this.queue[0]);
     }
 
+
+
   }
 
   sendFold(player) {
+    this.resetButtons(player);
     player.fold();
+    this.queue.shift();
 
     if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 0 ) {
+      // debugger
       return this.playRound();
     } else {
-      this.queue.shift();
       this.takeBets(this.queue[0]);
     }
 
   }
 
   sendBet(player) {
+
+    this.resetButtons(player);
 
     if ( this.most_recent_better === player ) {
       return this.playRound();
@@ -260,22 +285,24 @@ class Game {
 
 
   endRound() {
+
     const dealerMessage = document.getElementById('dealer-message-box');
     var li = document.createElement('li');
 
     const winningHand = this.winner().hand;
     // const winningHand ='hello from endround';
     this.showHands();
-
+//
     li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
-
+//
     dealerMessage.appendChild(li);
     this.winner().receiveWinnings(this.pot);
     this.pot = 0;
     this.returnCards();
+    resetHandPile();
+
     this.setup();
   }
-
 
 
   showHands() {

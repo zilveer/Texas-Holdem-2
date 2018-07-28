@@ -51,6 +51,7 @@ class Card {
   }
 
   isGreaterThan(otherCard) {
+// debugger
     if (this.value !== otherCard.value) {
       return ( this.values().indexOf(this.value) > this.values().indexOf(otherCard.value) );
     } else if (this.suit !== otherCard.suit) {
