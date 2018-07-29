@@ -8,10 +8,11 @@ class Game {
     // this.pile = this.deck.dealPile();
 
     this.queue = [];
-
+    this.calls = 0;
     this.high_bet = 0;
     this.most_recent_better = null;
     this.raises = true;
+
     this.setup();
   }
 
@@ -109,8 +110,9 @@ class Game {
       // }
       //
       // this.takeBets();
-        if (this.roundOver()) {
+        this.calls = 0;
 
+        if (this.roundOver()) {
           this.endRound();
           return;
         }
@@ -120,7 +122,9 @@ class Game {
         this.most_recent_better = null;
         this.raises = true;
 
-        this.pile.pile.push(this.deck.take(1)[0]); //4 cards
+        if ( this.pile.pile.length < 5) {
+          this.pile.pile.push(this.deck.take(1)[0]); //4 cards
+        }
         //
         for (let i = 0; i < this.players.length; i++) {
           const player = this.players[i];
@@ -226,15 +230,19 @@ class Game {
 
   sendCall(player) {
     this.addToPot(player.takeBet(this.high_bet));
-    this.resetButtons(player);
+    this.calls += 1;
+    // debugger
 
-    if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 0 ) {
-
+    if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 1 || this.calls === this.players.length ) {
+      this.queue.shift();
+      this.queue.push(player);
+      this.resetButtons(player);
       return this.playRound();
     } else {
       this.queue.shift();
       this.queue.push(player);
       this.takeBets(this.queue[0]);
+      this.resetButtons(player);
     }
 
 
@@ -242,22 +250,24 @@ class Game {
   }
 
   sendFold(player) {
-    this.resetButtons(player);
     player.fold();
     this.queue.shift();
 
-    if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 0 ) {
+    if ( this.roundOver() || this.most_recent_better === player || this.queue.length === 1 ) {
       // debugger
+      this.resetButtons(player);
       return this.playRound();
     } else {
       this.takeBets(this.queue[0]);
+      this.resetButtons(player);
     }
 
   }
 
   sendBet(player) {
 
-    this.resetButtons(player);
+    this.queue.shift();
+    this.queue.push(player);
 
     if ( this.most_recent_better === player ) {
       return this.playRound();
@@ -272,12 +282,12 @@ class Game {
     this.high_bet = bet;
     this.addToPot(takeBet);
 
-    if ( this.roundOver() || this.queue.length === 0 ) {
+    if ( this.roundOver() || this.queue.length === 1 ) {
+      this.resetButtons(player);
       return this.playRound();
     } else {
-      this.queue.shift();
-      this.queue.push(player);
       this.takeBets(this.queue[0]);
+      this.resetButtons(player);
     }
 
   }
