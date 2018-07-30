@@ -1,7 +1,3 @@
-// import Card from './card.js';
-// import { shuffle } from './utils';
-// const shuffle = require('./modules.js');
-
 class Deck {
 
   constructor() {
