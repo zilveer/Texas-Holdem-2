@@ -262,8 +262,7 @@ class Game {
   displayStatus(player) {
     const dealerMessage = document.getElementById('dealer-message-box');
     dealerMessage.innerHTML = '';
-    // dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${this.high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
-    //
+
     var ul = document.createElement('ul');
     ul.id = 'display-status';
 

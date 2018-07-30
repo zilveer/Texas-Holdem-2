@@ -1,6 +1,13 @@
+html {
+  font-family: 'Ubuntu', sans-serif;
+  background-image: url('./images/green-felt-wallpaper.jpg');
+  background-size: cover;
+}
+
 #holdem {
-  -webkit-animation: color-change 4s infinite;
-  animation: color-change 4s infinite;
+  /* -webkit-animation: color-change 4s infinite;
+  animation: color-change 4s infinite; */
+  color: white;
   padding-left: 50px;
 }
 
@@ -15,16 +22,21 @@ img {
   padding-left: 5px;
 }
 
-@-webkit-keyframes color-change {
+/* @-webkit-keyframes color-change {
     0% { color: red; }
     25% { color: blue; }
     50% { color: green; }
     75% { color: orange; }
     100% { color: red; }
+} */
+
+#holdem-table {
+
 }
 
 #table {
   padding-left: 50px;
+
 }
 
 #hands {
@@ -52,6 +64,7 @@ img {
 #Player1-money, #Player2-money, #Player3-money, #Player4-money {
   padding-left: 42px;
   font-weight: 600;
+  color: white;
 }
 
 #Player1-action, #Player2-action, #Player3-action, #Player4-action {
@@ -67,7 +80,7 @@ img {
   padding: 5px;
   border-radius: 5px;
   width: 30px;
-  background-color: #2F4F4F;
+  background-color:	#00008B;
   color: white;
 }
 
@@ -78,10 +91,17 @@ img {
 }
 
 #dealer-message-box {
-    font-weight: 600;
-    color: gray;
+    font-weight: 525;
+    color: white;
 }
 
 ul {
   list-style-type: none;
+}
+
+#display-status {
+  width: 200px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  padding: 10px;
 }
