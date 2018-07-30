@@ -5,16 +5,42 @@ class Game {
     this.players = players;
     this.pot = 0;
     this.deck = new Deck();
-    // this.pile = this.deck.dealPile();
-
     this.queue = [];
     this.calls = 0;
     this.high_bet = 0;
     this.most_recent_better = null;
-    // this.raises = true;
-
-    this.setup();
+    // this.setup();
+    this.test();
   }
+
+  test() {
+    this.deck = shuffle(this.deck);
+    this.pile = this.deck.dealPile();
+    this.pile.pile.push(this.deck.take(1)[0]);
+    this.pile.pile.push(this.deck.take(1)[0]);
+    this.pile.render();
+    this.queue = deepDup(this.players);
+    this.initialPileDeal();
+    this.endRound2();
+  }
+
+  endRound2() {
+    const dealerMessage = document.getElementById('dealer-message-box');
+    var li = document.createElement('li');
+    li.id = 'winner-message';
+
+    const winningHand = this.winner().hand;
+    this.showHands();
+
+    li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
+
+    dealerMessage.appendChild(li);
+    this.winner().receiveWinnings(this.pot);
+    this.pot = 0;
+    this.returnCards();
+
+  }
+
 
   resetPlayers() {
     for (var i = 0; i < this.players.length; i++) {
@@ -118,30 +144,6 @@ class Game {
     this.setButtons(player);
   }
 
-  hidePlayerCards(player) {
-    const hand = document.getElementById(`${player.name}-hand`).remove();
-
-    for (var i = 0; i < player.hand.hand.length; i++) {
-      const card = player.hand.hand[i];
-      const img = document.createElement('img');
-      img.src = './images/png/hoyleback.png';
-      img.id = 'back-card';
-      card.image = img;
-    }
-    player.render(player.hand);
-  }
-
-  displayPlayerCards(player) {
-    const hand = document.getElementById(`${player.name}-hand`).remove();
-    for (var i = 0; i < player.hand.hand.length; i++) {
-      const card = player.hand.hand[i];
-      const img = document.createElement('img');
-      img.src = `./images/PNG/${card.value}-${card.suit}.png`;
-      card.image = img;
-    }
-    return player.render(player.hand);
-  }
-
   sendFold(player) {
     player.fold();
     this.resetButtons(player);
@@ -193,13 +195,11 @@ class Game {
   }
 
   endRound() {
-
     const dealerMessage = document.getElementById('dealer-message-box');
     var li = document.createElement('li');
     li.id = 'winner-message';
 
     const winningHand = this.winner().hand;
-
     this.showHands();
 
     li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
@@ -210,14 +210,6 @@ class Game {
     this.returnCards();
 
     return setTimeout(this.setup.bind(this), 5000);
-  }
-
-  endGame() {
-    const dealerMessage = document.getElementById('dealer-message-box');
-    var li2 = document.createElement('li');
-    li2.id = 'end-game-message';
-    li2.innerHTML = 'FINITO!!!';
-    dealerMessage.appendChild(li2);
   }
 
   roundOver() {
@@ -245,6 +237,29 @@ class Game {
 
   addToPot(amount) {
     this.pot += amount;
+  }
+
+  hidePlayerCards(player) {
+    const hand = document.getElementById(`${player.name}-hand`).remove();
+    for (var i = 0; i < player.hand.hand.length; i++) {
+      const card = player.hand.hand[i];
+      const img = document.createElement('img');
+      img.src = './images/png/hoyleback.png';
+      img.id = 'back-card';
+      card.image = img;
+    }
+    player.render(player.hand);
+  }
+
+  displayPlayerCards(player) {
+    const hand = document.getElementById(`${player.name}-hand`).remove();
+    for (var i = 0; i < player.hand.hand.length; i++) {
+      const card = player.hand.hand[i];
+      const img = document.createElement('img');
+      img.src = `./images/PNG/${card.value}-${card.suit}.png`;
+      card.image = img;
+    }
+    return player.render(player.hand);
   }
 
   showHands() {
@@ -325,3 +340,11 @@ class Game {
   }
 
 }
+
+// endGame() {
+//   const dealerMessage = document.getElementById('dealer-message-box');
+//   var li2 = document.createElement('li');
+//   li2.id = 'end-game-message';
+//   li2.innerHTML = 'FINITO!!!';
+//   dealerMessage.appendChild(li2);
+// }
