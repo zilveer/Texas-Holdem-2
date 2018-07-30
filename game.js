@@ -265,7 +265,7 @@ class Game {
     // dealerMessage.innerHTML = `Pot: ${this.pot} High Bet: ${this.high_bet} Current Player: ${player.name}  Current Player Bets: ${player.currentBet}`;
     //
     var ul = document.createElement('ul');
-    ul.id = 'display-status'
+    ul.id = 'display-status';
 
     var li1 = document.createElement('li');
     var li2 = document.createElement('li');
@@ -275,7 +275,7 @@ class Game {
     li1.innerHTML = `Pot: $${formatMoney(this.pot)}`;
     li2.innerHTML = `High Bet: $${formatMoney(this.high_bet)}`;
     li3.innerHTML = `Current Player: ${player.name}`;
-    li4.innerHTML = `Current Bet: $${formatMoney(player.currentBet)}`
+    li4.innerHTML = `Current Bet: $${formatMoney(player.currentBet)}`;
 
     dealerMessage.appendChild(ul);
     const message = document.getElementById('display-status');
