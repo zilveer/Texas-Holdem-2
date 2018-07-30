@@ -50,7 +50,9 @@ class Player {
 
     var foldButton = document.createElement('div');
     var callButton = document.createElement('div');
-    var betButton = document.createElement('div');
+    // var betButton = document.createElement('div');
+
+    var betButton = document.createElement('form');
 
     foldButton.innerHTML = 'Fold';
     callButton.innerHTML = 'Call';

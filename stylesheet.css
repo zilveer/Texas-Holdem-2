@@ -32,6 +32,10 @@ img {
     100% { color: red; }
 }
 
+#back-card {
+    border-radius: 9px;
+}
+
 #holdem-table {
 
 }

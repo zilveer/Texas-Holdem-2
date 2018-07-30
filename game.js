@@ -147,7 +147,8 @@ class Game {
     for (var i = 0; i < player.hand.hand.length; i++) {
       const card = player.hand.hand[i];
       const img = document.createElement('img');
-      img.src = './images/png/blue-back.png';
+      img.src = './images/png/hoyleback.png';
+      img.id = 'back-card';
       card.image = img;
     }
     player.render(player.hand);
