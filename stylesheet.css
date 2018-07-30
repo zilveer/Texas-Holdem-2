@@ -1,3 +1,87 @@
+#holdem {
+  -webkit-animation: color-change 4s infinite;
+  animation: color-change 4s infinite;
+  padding-left: 50px;
+}
+
+#dealer-deck {
+  display: flex;
+  padding-top: 20px;
+}
+
+img {
+  width: fixed;
+  height: 175px;
+  padding-left: 5px;
+}
+
+@-webkit-keyframes color-change {
+    0% { color: red; }
+    25% { color: blue; }
+    50% { color: green; }
+    75% { color: orange; }
+    100% { color: red; }
+}
+
+#table {
+  padding-left: 50px;
+}
+
 #hands {
   display: flex;
+
+}
+
+#Player1, #Player2, #Player3, #Player4 {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+}
+
+#Player1-hand, #Player2-hand, #Player3-hand, #Player4-hand {
+  padding-right: 44px;
+  display: flex;
+  margin-top: 50px;
+}
+
+#folded {
+  color: red;
+  padding-left: 42px;
+}
+
+#Player1-money, #Player2-money, #Player3-money, #Player4-money {
+  padding-left: 42px;
+  font-weight: 600;
+}
+
+#Player1-action, #Player2-action, #Player3-action, #Player4-action {
+  display: flex;
+  justify-content: center;
+}
+
+#Player1fold, #Player1call, #Player1bet, #Player2fold, #Player2call, #Player2bet,
+#Player3fold, #Player3call, #Player3bet, #Player4fold, #Player4call, #Player4bet {
+  font-weight: 500;
+  border: 1px solid black;
+  margin-right: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  width: 30px;
+  background-color: #2F4F4F;
+  color: white;
+}
+
+#Player1fold:hover, #Player1call:hover, #Player1bet:hover, #Player2fold:hover, #Player2call:hover, #Player2bet:hover,
+#Player3fold:hover, #Player3call:hover, #Player3bet:hover, #Player4fold:hover, #Player4call:hover, #Player4bet:hover {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#dealer-message-box {
+    font-weight: 600;
+    color: gray;
+}
+
+ul {
+  list-style-type: none;
 }

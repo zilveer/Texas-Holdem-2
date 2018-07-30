@@ -4,6 +4,7 @@ class Card {
     this.suit = suit;
     this.value = value;
     this.image = image;
+    // this.visible = false;
   }
 
   SUITS_STRINGS() {

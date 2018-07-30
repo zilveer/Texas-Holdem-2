@@ -11,7 +11,7 @@ class Deck {
 
   render() {
     var img = document.createElement('img');
-    img.src = './images/cards/b.gif';
+    img.src = './images/png/hoyleback.png';
     var deck = document.getElementById('deck');
     deck.innerHTML = '';
     deck.appendChild(img);
@@ -23,7 +23,7 @@ class Deck {
     sample.values().forEach( value => {
       sample.suits().forEach( suit => {
         var img = document.createElement('img');
-        img.src = `./images/cards/${value}_${suit}.gif`;
+        img.src = `./images/PNG/${value}-${suit}.png`;
         deck.push( new Card(suit, value, img) );
       });
     });

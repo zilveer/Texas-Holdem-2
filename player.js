@@ -13,17 +13,24 @@ class Player {
   }
 
   render(hand) {
+
     const hands = document.getElementById('hands');
     var ul = document.createElement('ul');
     ul.id = this.name;
     hands.appendChild(ul);
-    var innerHand = document.getElementById(`${this.name}`);
 
-    hand.hand.forEach ( card => {
-      innerHand.appendChild(card.image);
-    });
-    this.renderButtons();
     this.renderMoneyBox();
+    this.renderButtons();
+
+    var innerHand = document.getElementById(`${this.name}`);
+    var handUl = document.createElement('ul');
+    handUl.id = `${this.name}-hand`;
+    innerHand.appendChild(handUl);
+    hand.hand.forEach ( card => {
+      handUl.appendChild(card.image);
+    });
+
+
   }
 
   renderMoneyBox() {
@@ -41,9 +48,9 @@ class Player {
 
     innerHand.appendChild(actionDiv);
 
-    var foldButton = document.createElement('button');
-    var callButton = document.createElement('button');
-    var betButton = document.createElement('button');
+    var foldButton = document.createElement('div');
+    var callButton = document.createElement('div');
+    var betButton = document.createElement('div');
 
     foldButton.innerHTML = 'Fold';
     callButton.innerHTML = 'Call';
@@ -52,10 +59,6 @@ class Player {
     foldButton.id = `${this.name}fold`;
     callButton.id = `${this.name}call`;
     betButton.id = `${this.name}bet`;
-
-    // foldButton.addEventListener('click', this.sendFold);
-    // callButton.addEventListener('click', this.sendCall);
-    // betButton.addEventListener('click', this.sendBet);
 
     foldButton.style.display = 'none';
     callButton.style.display = 'none';
@@ -68,22 +71,12 @@ class Player {
     handAction.appendChild(betButton);
   }
 
-  // sendFold() {
-  //   return 'fold';
-  // }
-  // sendCall() {
-  //   return 'call';
-  // }
-  // sendBet() {
-  //   return 'bet';
-  // }
-
   renderMoney() {
     var moneybox = document.getElementById(`${this.name}-moneybox`);
     moneybox.innerHTML = '';
     var money = document.createElement('p');
     money.id = `${this.name}-money`;
-    money.innerHTML = `Bankroll: ${this.bankroll}`;
+    money.innerHTML = `Bankroll: $${formatMoney(this.bankroll)}`;
     moneybox.appendChild(money);
   }
 
@@ -105,6 +98,12 @@ class Player {
 
   fold() {
     this.folded = true;
+    var hand = document.getElementById(`${this.name}-hand`);
+    hand.innerHTML = '';
+    var div = document.createElement('div');
+    div.innerHTML = 'Folded';
+    div.id = 'folded';
+    hand.appendChild(div);
   }
 
   unfold() {
