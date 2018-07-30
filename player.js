@@ -101,7 +101,7 @@ class Player {
     var hand = document.getElementById(`${this.name}-hand`);
     hand.innerHTML = '';
     var div = document.createElement('div');
-    div.innerHTML = 'Folded';
+    div.innerHTML = 'FOLDED';
     div.id = 'folded';
     hand.appendChild(div);
   }

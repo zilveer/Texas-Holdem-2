@@ -1,6 +1,6 @@
 html {
   font-family: 'Ubuntu', sans-serif;
-  background-image: url('./images/green-felt-wallpaper.jpg');
+  background-image: url('./images/PNG/H1uK45i.png');
   background-size: cover;
 }
 
@@ -9,6 +9,8 @@ html {
   animation: color-change 4s infinite; */
   color: white;
   padding-left: 50px;
+  font-size: 40px;
+  text-shadow: 4px 4px black;
 }
 
 #dealer-deck {
@@ -22,13 +24,13 @@ img {
   padding-left: 5px;
 }
 
-/* @-webkit-keyframes color-change {
+@-webkit-keyframes color-change {
     0% { color: red; }
-    25% { color: blue; }
-    50% { color: green; }
-    75% { color: orange; }
+    25% { color: yellow; }
+    50% { color: orange; }
+    75% { color: red; }
     100% { color: red; }
-} */
+}
 
 #holdem-table {
 
@@ -36,7 +38,6 @@ img {
 
 #table {
   padding-left: 50px;
-
 }
 
 #hands {
@@ -58,29 +59,40 @@ img {
 
 #folded {
   color: red;
+  font-size: 30px;
   padding-left: 42px;
+  text-shadow: 3px 3px black;
 }
 
 #Player1-money, #Player2-money, #Player3-money, #Player4-money {
-  padding-left: 42px;
+  /* padding-left: 50px; */
   font-weight: 600;
   color: white;
+  border-radius: 10px;
+  border: 1px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 3px 7px black;
+  text-shadow: 3px 3px black;
 }
 
 #Player1-action, #Player2-action, #Player3-action, #Player4-action {
   display: flex;
   justify-content: center;
+  padding-left: 20px;
 }
 
 #Player1fold, #Player1call, #Player1bet, #Player2fold, #Player2call, #Player2bet,
 #Player3fold, #Player3call, #Player3bet, #Player4fold, #Player4call, #Player4bet {
   font-weight: 500;
   border: 1px solid black;
+  text-align: center;
   margin-right: 5px;
   padding: 5px;
   border-radius: 5px;
-  width: 30px;
-  background-color:	#00008B;
+  width: 50px;
+  background-color:	black;
+  opacity: 0.3;
   color: white;
 }
 
@@ -88,6 +100,7 @@ img {
 #Player3fold:hover, #Player3call:hover, #Player3bet:hover, #Player4fold:hover, #Player4call:hover, #Player4bet:hover {
   cursor: pointer;
   font-weight: 600;
+  opacity: 1.0;
 }
 
 #dealer-message-box {
@@ -99,9 +112,21 @@ ul {
   list-style-type: none;
 }
 
+li {
+  list-style-type: none;
+}
+
 #display-status {
   width: 200px;
   border-radius: 10px;
-  border: 1px solid gray;
+  border: 1px;
   padding: 10px;
+  box-shadow: 5px 10px black;
+}
+
+#winner-message {
+  font-size: 22px;
+  -webkit-animation: color-change 2s infinite;
+  animation: color-change 2s infinite;
+  padding-top: 15px;
 }

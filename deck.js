@@ -11,7 +11,7 @@ class Deck {
 
   render() {
     var img = document.createElement('img');
-    img.src = './images/png/hoyleback.png';
+    img.src = './images/png/blue-back.png';
     var deck = document.getElementById('deck');
     deck.innerHTML = '';
     deck.appendChild(img);

@@ -147,10 +147,10 @@ class Game {
     for (var i = 0; i < player.hand.hand.length; i++) {
       const card = player.hand.hand[i];
       const img = document.createElement('img');
-      img.src = './images/png/hoyleback.png';
+      img.src = './images/png/blue-back.png';
       card.image = img;
     }
-    player.render(player.hand)
+    player.render(player.hand);
   }
 
   displayPlayerCards(player) {
@@ -229,6 +229,7 @@ class Game {
 
     const dealerMessage = document.getElementById('dealer-message-box');
     var li = document.createElement('li');
+    li.id = 'winner-message';
 
     const winningHand = this.winner().hand;
 
