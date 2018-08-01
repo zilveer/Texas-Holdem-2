@@ -1,12 +1,65 @@
+#newGame2, #newGame3, #newGame4 {
+  color: white;
+  font-weight: 600;
+  background-color: black;
+  border-radius: 5px;
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+  margin-left: 5px;
+  opacity: 0.5;
+}
+#newGame2:hover, #newGame3:hover, #newGame4:hover {
+  cursor: pointer;
+  opacity: 1.0;
+}
+
+#selection {
+  display: flex;
+  margin-top: 30px;
+}
+
+
 html {
   font-family: 'Ubuntu', sans-serif;
   background-image: url('./images/PNG/H1uK45i.png');
   background-size: cover;
 }
 
+#many-chips {
+  height: 150px;
+  width: fixed;
+  /* padding-left: 45px; */
+  padding-top: 50px;
+}
+
+#blue-chips {
+  /* padding-left: 45px; */
+  padding-top: 50px;
+  height: 90px;
+}
+
+#small-chips {
+  /* padding-left: 45px; */
+  padding-top: 50px;
+  height: 80px;
+}
+
+#most-chips {
+  height: 200px;
+  width: fixed;
+  /* padding-left: 45px; */
+  padding-top: 50px;
+}
+
+#medium-chips {
+  height: 125px;
+  width: fixed;
+  /* padding-left: 45px; */
+  padding-top: 50px;
+}
+
 #holdem {
-  /* -webkit-animation: color-change 4s infinite;
-  animation: color-change 4s infinite; */
   color: white;
   padding-left: 50px;
   font-size: 40px;
@@ -63,13 +116,22 @@ img {
 #Player1, #Player2, #Player3, #Player4 {
   display: flex;
   flex-direction: column;
-  width: 230px;
+  /* width: 230px; */
+  /* margin-left: 25px; */
 }
 
 #Player1-hand, #Player2-hand, #Player3-hand, #Player4-hand {
-  padding-right: 44px;
+  /* padding-right: 44px; */
   display: flex;
-  margin-top: 50px;
+  justify-content: flex-start;
+  /* align-items: */
+  /* margin-top: 50px; */
+}
+#Player1-name, #Player2-name, #Player3-name, #Player4-name {
+  padding-left: 44px;
+  color: yellow;
+  font-weight: 500;
+  opacity: 0.6;
 }
 
 #folded {
@@ -80,22 +142,23 @@ img {
 }
 
 #Player1-money, #Player2-money, #Player3-money, #Player4-money {
-  /* padding-left: 50px; */
+  width: 150px;
+  margin-left: 71px;
   font-weight: 600;
   color: white;
   border-radius: 10px;
   border: 1px;
   padding: 15px;
   text-align: center;
-  box-shadow: 3px 7px black;
+  box-shadow: 3px 5px black;
   text-shadow: 3px 3px black;
-  /* background-color: green; */
+  background-image: url('./images/PNG/wood-grain.jpg');
 }
 
 #Player1-action, #Player2-action, #Player3-action, #Player4-action {
   display: flex;
   justify-content: center;
-  padding-left: 20px;
+  margin-left: 30px;
 }
 
 #Player1fold, #Player1call,  #Player2fold, #Player2call,
@@ -116,6 +179,7 @@ img {
 #Player1bet, #Player2bet, #Player3bet, #Player4bet {
   width: 100px;
   padding: 10px;
+  /* margin-top: 10px; */
 }
 
 input[type="number"] {
@@ -125,6 +189,7 @@ input[type="number"] {
 }
 
 input[type="submit"] {
+  margin-top: 10px;
   width: 70px;
   border-radius: 5px;
   font-weight: 800;
@@ -149,6 +214,13 @@ li {
 }
 
 #winner-message {
+  font-size: 22px;
+  -webkit-animation: color-change 2s infinite;
+  animation: color-change 2s infinite;
+  padding-top: 15px;
+}
+
+#end-game-message {
   font-size: 22px;
   -webkit-animation: color-change 2s infinite;
   animation: color-change 2s infinite;

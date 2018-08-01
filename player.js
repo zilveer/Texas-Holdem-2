@@ -61,28 +61,61 @@ class Player {
 
   render(hand) {
     const hands = document.getElementById('hands');
-    var ul = document.createElement('ul');
-    ul.id = this.name;
-    hands.appendChild(ul);
+// debugger
+    if ( document.getElementById(`${this.name}`) === null ) {
+      var ul = document.createElement('ul');
+      ul.id = this.name;
+      hands.appendChild(ul);
+    } else {
+      var ul =  document.getElementById(`${this.name}`);
+      ul.innerHTML = '';
+    }
+    var nameP = document.createElement('p');
+    nameP.id = `${this.name}-name`;
+    nameP.innerHTML = `${this.name}`;
 
-    this.renderMoneyBox();
-    this.renderButtons();
 
     var innerHand = document.getElementById(`${this.name}`);
+    innerHand.appendChild(nameP);
     var handUl = document.createElement('ul');
     handUl.id = `${this.name}-hand`;
     innerHand.appendChild(handUl);
     hand.hand.forEach ( card => {
       handUl.appendChild(card.image);
     });
+
+    this.renderMoneyBox();
+    this.renderMoney();
+    this.renderButtons();
+
   }
 
   renderMoney() {
     var moneybox = document.getElementById(`${this.name}-moneybox`);
     moneybox.innerHTML = '';
     var money = document.createElement('p');
+    var img = document.createElement('img');
+
+    if (this.bankroll >= 110000) {
+      img.src = './images/png/most-chips.png';
+      img.id = 'most-chips'
+    } else if ( this.bankroll < 110000 && this.bankroll >= 90000) {
+      img.src = './images/png/many-chips-2.png';
+      img.id = 'many-chips'
+    } else if ( this.bankroll < 90000 && this.bankroll > 70000) {
+      img.src = './images/png/poker-chips.png';
+      img.id = 'blue-chips'
+    } else if ( this.bankroll <= 70000 && this.bankroll > 30000 ) {
+      img.src = './images/png/medium-chips.png';
+      img.id = 'medium-chips'
+    } else if ( this.bankroll <= 30000 && this.bankroll > 1 ) {
+      img.src = './images/png/small-chips.png';
+      img.id = 'small-chips'
+    }
+
     money.id = `${this.name}-money`;
     money.innerHTML = `Bankroll: $${formatMoney(this.bankroll)}`;
+    moneybox.appendChild(img);
     moneybox.appendChild(money);
   }
 

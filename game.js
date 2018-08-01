@@ -9,38 +9,9 @@ class Game {
     this.calls = 0;
     this.high_bet = 0;
     this.most_recent_better = null;
-    // this.setup();
-    this.test();
+    this.setup();
+    // this.test();
   }
-
-  test() {
-    this.deck = shuffle(this.deck);
-    this.pile = this.deck.dealPile();
-    this.pile.pile.push(this.deck.take(1)[0]);
-    this.pile.pile.push(this.deck.take(1)[0]);
-    this.pile.render();
-    this.queue = deepDup(this.players);
-    this.initialPileDeal();
-    this.endRound2();
-  }
-
-  endRound2() {
-    const dealerMessage = document.getElementById('dealer-message-box');
-    var li = document.createElement('li');
-    li.id = 'winner-message';
-
-    const winningHand = this.winner().hand;
-    this.showHands();
-
-    li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
-
-    dealerMessage.appendChild(li);
-    this.winner().receiveWinnings(this.pot);
-    this.pot = 0;
-    this.returnCards();
-
-  }
-
 
   resetPlayers() {
     for (var i = 0; i < this.players.length; i++) {
@@ -67,24 +38,6 @@ class Game {
     return strongestPlayer;
   }
 
-  comparator(player, otherPlayer) {
-    let strongPlayer;
-    if (player.isEqual(otherPlayer)) {
-      if (player.hand.tieBreaker(otherPlayer.hand)) {
-        strongPlayer = player;
-      } else {
-        strongPlayer = otherPlayer;
-      }
-    } else {
-      if (player.isGreaterThan(otherPlayer)) {
-        strongPlayer = player;
-      } else {
-        strongPlayer = otherPlayer;
-      }
-    }
-    return strongPlayer;
-  }
-
   setup() {
     resetHandPile();
     this.high_bet = 0;
@@ -94,15 +47,28 @@ class Game {
     this.pile = this.deck.dealPile();
     this.resetPlayers();
     this.queue = deepDup(this.players);
+    this.queue = this.queue.filter( player => (player.bankroll > 0));
+
     this.initialPileDeal();
     this.takeBets(this.queue[0]);
   }
 
+  initialPileDeal() {
+    for (let i = 0; i < this.queue.length; i++) {
+      const player = this.queue[i];
+      player.dealIn(this.deck.dealHand());
+      player.hand.pile = this.pile.pile;
+      this.hidePlayerCards(player);
+      player.resetCurrentBet();
+    }
+  }
+
   playRound() {
     const pileLength = this.pile.pile.length;
-    if ( ( pileLength === 5 && this.calls === this.queue.length) || this.roundOver() || ( this.most_recent_better === this.queue[0] && pileLength === 5 ) ) {
+    if ( ( pileLength === 5 && this.calls === this.queue.length) || this.roundOver() || ( this.most_recent_better === this.queue[0] && pileLength === 5 ) || this.queue.length === 1 ) {
       return this.endRound();
     }
+
     this.dealNextCard();
     this.pile.render();
     this.takeBets(this.queue[0]);
@@ -127,22 +93,67 @@ class Game {
     }
   }
 
-  initialPileDeal() {
-    for (let i = 0; i < this.queue.length; i++) {
-      const player = this.queue[i];
-      if (player.bankroll <= 0) { continue; }
-      player.dealIn(this.deck.dealHand());
-      player.hand.pile = this.pile.pile;
-      this.hidePlayerCards(player);
-      player.resetCurrentBet();
+  takeBets(player) {
+
+
+    const pileLength = this.pile.pile.length;
+    if ( ( pileLength === 5 && this.calls === this.queue.length) || this.roundOver() || ( this.most_recent_better === this.queue[0] && pileLength === 5 || this.gameOver() ) ) {
+      const pile =  this.pile.pile;
+      while ( pile.length < 5 ) {
+        pile.push(this.deck.take(1)[0]);
+      }
+      this.pile.render();
+      for (let i = 0; i < this.queue.length; i++) {
+        const player = this.queue[i];
+        player.hand.pile = pile;
+        player.resetCurrentBet();
+        this.resetButtons(player);
+        this.hidePlayerCards(player);
+      }
+      return this.endRound();
+
+    } else if ( player.bankroll <= 0 ) {
+
+      this.queue.shift()
+      this.queue.push(player)
+      return this.takeBets(this.queue[0]);
+    } else {
+
+      this.displayStatus(player);
+      this.displayPlayerCards(player);
+      this.setButtons(player);
     }
+
+
+
+    // this.displayStatus(player);
+    // this.displayPlayerCards(player);
+    // this.setButtons(player);
+
   }
 
-  takeBets(player) {
-    this.displayStatus(player);
-    this.displayPlayerCards(player);
-    this.setButtons(player);
-  }
+  // everyoneBroke(aPlayer) {
+  //   if ( this.gameOver() ) {
+  //     const pile =  this.pile.pile;
+  //     while ( pile.length < 5 ) {
+  //       pile.push(this.deck.take(1)[0]);
+  //     }
+  //     this.pile.render();
+  //     for (let i = 0; i < this.queue.length; i++) {
+  //       const player = this.queue[i];
+  //       player.hand.pile = pile;
+  //       player.resetCurrentBet();
+  //       this.resetButtons(player);
+  //       this.hidePlayerCards(player);
+  //     }
+  //     return this.endRound();
+  //
+  //   } else if ( aPlayer.bankroll <= 0 ) {
+  //     this.queue.shift()
+  //     this.queue.push(aPlayer)
+  //     return this.takeBets(this.queue[0]);
+  //   }
+  // }
 
   sendFold(player) {
     player.fold();
@@ -158,10 +169,17 @@ class Game {
   }
 
   sendCall(player) {
+
+    if ( player.bankroll < this.high_bet ) {
+        this.takeBets(this.queue[0]);
+        return;
+    }
+
     this.resetButtons(player);
     this.hidePlayerCards(player);
     this.addToPot(player.takeBet(this.high_bet));
     this.calls += 1;
+
     this.queue.shift();
     this.queue.push(player);
 
@@ -174,14 +192,21 @@ class Game {
   }
 
   sendBet(e, player) {
+
     e.preventDefault();
+
+    const bet = e.currentTarget.children[0].value;
+//
+    if ( player.bankroll < parseInt(bet) || bet === '' ||parseInt(bet) <= parseInt(this.high_bet) ) {
+        this.takeBets(this.queue[0]);
+        return;
+    }
+
     this.most_recent_better = player;
     this.queue.shift();
     this.queue.push(player);
     this.hidePlayerCards(player);
     this.resetButtons(player);
-
-    const bet = e.currentTarget.children[0].value;
     this.calls = 0;
     const takeBet = player.takeBet(bet);
     this.high_bet = bet;
@@ -206,10 +231,16 @@ class Game {
 
     dealerMessage.appendChild(li);
     this.winner().receiveWinnings(this.pot);
+    this.winner().renderMoney();
     this.pot = 0;
     this.returnCards();
 
-    return setTimeout(this.setup.bind(this), 5000);
+    if (this.gameOver()) {
+
+      return this.endGame();
+    } else {
+      return setTimeout(this.setup.bind(this), 5000);
+    }
   }
 
   roundOver() {
@@ -237,6 +268,24 @@ class Game {
 
   addToPot(amount) {
     this.pot += amount;
+  }
+
+  comparator(player, otherPlayer) {
+    let strongPlayer;
+    if (player.isEqual(otherPlayer)) {
+      if (player.hand.tieBreaker(otherPlayer.hand)) {
+        strongPlayer = player;
+      } else {
+        strongPlayer = otherPlayer;
+      }
+    } else {
+      if (player.isGreaterThan(otherPlayer)) {
+        strongPlayer = player;
+      } else {
+        strongPlayer = otherPlayer;
+      }
+    }
+    return strongPlayer;
   }
 
   hidePlayerCards(player) {
@@ -339,12 +388,41 @@ class Game {
 
   }
 
+  endGame() {
+    const dealerMessage = document.getElementById('dealer-message-box');
+    var li2 = document.createElement('li');
+    li2.id = 'end-game-message';
+    li2.innerHTML = 'FINISHED!!!';
+    dealerMessage.appendChild(li2);
+    //
+  }
+
+
 }
 
-// endGame() {
-//   const dealerMessage = document.getElementById('dealer-message-box');
-//   var li2 = document.createElement('li');
-//   li2.id = 'end-game-message';
-//   li2.innerHTML = 'FINITO!!!';
-//   dealerMessage.appendChild(li2);
-// }
+  // test() {
+  //   this.deck = shuffle(this.deck);
+  //   this.pile = this.deck.dealPile();
+  //   this.pile.pile.push(this.deck.take(1)[0]);
+  //   this.pile.pile.push(this.deck.take(1)[0]);
+  //   this.pile.render();
+  //   this.queue = deepDup(this.players);
+  //   this.initialPileDeal();
+  //   this.endRound2();
+  // }
+  //
+  // endRound2() {
+  //   const dealerMessage = document.getElementById('dealer-message-box');
+  //   var li = document.createElement('li');
+  //   li.id = 'winner-message';
+  //
+  //   const winningHand = this.winner().hand;
+  //   this.showHands();
+  //
+  //   li.innerHTML = `WINNER - ${this.winner().name} wins $${this.pot} with a ${winningHand.rank()}`;
+  //
+  //   dealerMessage.appendChild(li);
+  //   this.winner().receiveWinnings(this.pot);
+  //   this.pot = 0;
+  //   this.returnCards();
+  // }
