@@ -2,7 +2,7 @@
 
 A variation of Poker that implements basic OOP concepts in Javascript. Two cards are are dealt face down to each player, and then five community cards are dealt face up in three stages. The game currently supports 2, 3, & 4 player options. Players are initialized with a $100k bankroll. 
 
-![Alt-text](https://i.imgur.com/VbVTNSJ.gif)
+![Alt Text](https://i.imgur.com/VbVTNSJ.gif)
 
 ## Features
 * 2, 3, 4 player options
