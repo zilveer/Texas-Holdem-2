@@ -97,19 +97,19 @@ class Player {
     var img = document.createElement('img');
 
     if (this.bankroll >= 110000) {
-      img.src = './images/png/most-chips.png';
+      img.src = './images/PNG/most-chips.png';
       img.id = 'most-chips'
     } else if ( this.bankroll < 110000 && this.bankroll >= 90000) {
-      img.src = './images/png/many-chips-2.png';
+      img.src = './images/PNG/many-chips-2.png';
       img.id = 'many-chips'
     } else if ( this.bankroll < 90000 && this.bankroll > 70000) {
-      img.src = './images/png/poker-chips.png';
+      img.src = './images/PNG/poker-chips.png';
       img.id = 'blue-chips'
     } else if ( this.bankroll <= 70000 && this.bankroll > 30000 ) {
-      img.src = './images/png/medium-chips.png';
+      img.src = './images/PNG/medium-chips.png';
       img.id = 'medium-chips'
     } else if ( this.bankroll <= 30000 && this.bankroll > 1 ) {
-      img.src = './images/png/small-chips.png';
+      img.src = './images/PNG/small-chips.png';
       img.id = 'small-chips'
     }
 

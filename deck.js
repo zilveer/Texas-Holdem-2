@@ -7,7 +7,7 @@ class Deck {
 
   render() {
     var img = document.createElement('img');
-    img.src = './images/png/hoyleback.png';
+    img.src = './images/PNG/hoyleback.png';
     img.id = 'back-card';
     var deck = document.getElementById('deck');
     deck.innerHTML = '';
