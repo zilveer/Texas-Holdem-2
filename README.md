@@ -11,7 +11,29 @@ A variation of Poker that implements basic OOP concepts in Javascript. Two cards
 
 ## Code Samples
 ```javascript
+  handTypes() {
+    return [
+      'RoyalFlush',
+      'StraightFlush',
+      'FourKind',
+      'House',
+      'Flush',
+      'Straight',
+      'ThreeKind',
+      'TwoPair',
+      'OnePair',
+      'HighCard'
+    ];
+  }
 
+  rank() {
+    for (var i = 0; i < this.handTypes().length; i++) {
+     const handType = this.handTypes()[i];
+     if (this[`is${handType}`]()) {
+       return handType;
+     }
+    }
+  }
 ```
 
 
