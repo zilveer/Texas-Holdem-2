@@ -9,6 +9,7 @@ class Game {
     this.calls = 0;
     this.high_bet = 0;
     this.most_recent_better = null;
+    // this.backCard = this.loadImages();
     this.setup();
     // this.test();
   }
@@ -293,7 +294,7 @@ class Game {
     for (var i = 0; i < player.hand.hand.length; i++) {
       const card = player.hand.hand[i];
       const img = document.createElement('img');
-      img.src = './images/png/hoyleback.png';
+      img.src = './images/PNG/hoyleback.png';
       img.id = 'back-card';
       card.image = img;
     }
@@ -396,6 +397,12 @@ class Game {
     dealerMessage.appendChild(li2);
     //
   }
+
+  // loadImages() {
+  //   let image = new Image();
+  //   image.src = './images/png/hoyleback.png';
+  //   return image;
+  // }
 
 
 }
