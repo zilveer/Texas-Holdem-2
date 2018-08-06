@@ -10,6 +10,7 @@ A variation of Poker that implements basic OOP concepts in Javascript. Two cards
 * Analyzes hand and community cards to determine hand (or rank) and decide table winner
 
 ## Code Samples
+* Determining hands
 ```javascript
   handTypes() {
     return [
@@ -36,6 +37,25 @@ A variation of Poker that implements basic OOP concepts in Javascript. Two cards
   }
 ```
 
+* Handling Ties
+```javascript
+  tieBreaker(otherPokerHand) {
+    switch (otherPokerHand.rank) {
+      case 'straightFlush': case 'straight': case 'flush':
+        return this.highCard().isGreaterThan(otherPokerHand.highCard());
+      case 'fourKind':
+        return compareSetThenHighCard(4, otherPokerHand);
+      case 'threeKind':
+        return compareSetThenHighCard(3, otherPokerHand);
+      case 'twoPair':
+        return compareTwoPair(otherPokerHand);
+      case 'onePair':
+        return compareSetThenHighCard(2, otherPokerHand);
+      case 'house':
+        return this.compareHouse(otherPokerHand);
+    }
+  }
+```
 
 ## Future Developments
 * Implement blinds
