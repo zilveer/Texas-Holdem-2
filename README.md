@@ -12,7 +12,7 @@ A variation of Poker that implements basic OOP concepts in Javascript while impl
 * Analyzes hand and community cards to determine hand (or rank) and decide table winner
 
 ## Code Samples
-* Determining hands
+* Determining hands through use of reflective meta-programming
 ```javascript
   handTypes() {
     return [
