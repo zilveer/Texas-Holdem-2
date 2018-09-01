@@ -2,7 +2,7 @@
 
 [Play](https://dsm1193.github.io/Texas-Holdem/) 
 
-
+A variation of Poker that implements OOP concepts in Javascript while using aspects of modular programming (e.g., shuffleCards, sortCards, comparator) for usability throughout the application. Two cards are are dealt face down to each player, and then five community cards are dealt face up in three stages. The game currently supports 2, 3, & 4 player options. Players are initialized with a $100k bankroll. 
 
 ![Alt Text](https://i.imgur.com/RZIVlj8.gif)
 
